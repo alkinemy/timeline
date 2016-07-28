@@ -1,4 +1,4 @@
-package com.lezhin.timeline.server.domain.assembler;
+package com.lezhin.timeline.server.domain.base.assembler;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

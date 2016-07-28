@@ -1,6 +1,6 @@
 package com.lezhin.timeline.server.domain.message.assembler;
 
-import com.lezhin.timeline.server.domain.assembler.AbstractAssembler;
+import com.lezhin.timeline.server.domain.base.assembler.AbstractAssembler;
 import com.lezhin.timeline.server.domain.message.dto.TimelineMessageInsertForm;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
 import com.lezhin.timeline.server.domain.user.model.TimelineUser;
@@ -19,7 +19,7 @@ public class TimelineMessageEntityAssembler extends AbstractAssembler<TimelineMe
 	protected TimelineMessageEntity doAssemble(TimelineMessageInsertForm insertForm) {
 		TimelineMessageEntity message = new TimelineMessageEntity();
 		BeanUtils.copyProperties(insertForm, message);
-		TimelineUser author = timelineUserFacadeService.getTimelineUser(insertForm.getLoginId());
+		TimelineUser author = timelineUserFacadeService.getTimelineUser(insertForm.getLoginId()).getUser();
 		message.setAuthor(author);
 		return message;
 	}

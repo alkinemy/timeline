@@ -13,7 +13,7 @@ apply plugin: 'spring-boot'
 
 idea {
     module {
-        sourceDirs += file('generated/')
+        sourceDirs += file('generated/java')
     }
 }
 

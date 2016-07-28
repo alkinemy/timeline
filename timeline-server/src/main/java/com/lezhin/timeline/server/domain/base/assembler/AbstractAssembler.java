@@ -1,4 +1,4 @@
-package com.lezhin.timeline.server.domain.assembler;
+package com.lezhin.timeline.server.domain.base.assembler;
 
 public abstract class AbstractAssembler<F, T> implements Assembler<F, T> {
 

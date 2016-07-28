@@ -1,6 +1,6 @@
 package com.lezhin.timeline.server.interfaces.api.message.service;
 
-import com.lezhin.timeline.server.domain.assembler.SmartAssembler;
+import com.lezhin.timeline.server.domain.base.assembler.SmartAssembler;
 import com.lezhin.timeline.server.domain.message.dto.TimelineMessageInsertForm;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
 import com.lezhin.timeline.server.domain.message.service.TimelineMessageFacadeService;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TimelineMessageApiFacadeService {
@@ -33,9 +32,8 @@ public class TimelineMessageApiFacadeService {
 	}
 
 	public List<TimelineMessageDto> listMessages(String loginId) {
-		TimelineUser user = Optional.ofNullable(timelineUserFacadeService.getTimelineUser(loginId))
-			.orElseThrow(() -> new RuntimeException("No timeline user exist")); //TODO 에러 처리
-		List<TimelineMessageEntity> timelineMessages = timelineMessageFacadeService.findAll(user);
+		TimelineUser user = timelineUserFacadeService.getTimelineUser(loginId).getUser();
+		List<TimelineMessageEntity> timelineMessages = timelineMessageFacadeService.getTimelineMessages(user);
 		return assembler.assemble(timelineMessages, TimelineMessageDto.class);
 	}
 }

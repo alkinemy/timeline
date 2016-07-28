@@ -1,6 +1,6 @@
-package com.lezhin.timeline.server.interfaces.api.message;
+package com.lezhin.timeline.server.interfaces.api.message.assembler;
 
-import com.lezhin.timeline.server.domain.assembler.ListAssembler;
+import com.lezhin.timeline.server.domain.base.assembler.ListAssembler;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
 import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineMessageDto;
 import org.springframework.stereotype.Component;

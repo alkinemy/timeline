@@ -1,4 +1,4 @@
-package com.lezhin.timeline.server.domain.assembler;
+package com.lezhin.timeline.server.domain.base.assembler;
 
 import lombok.Getter;
 import lombok.Setter;

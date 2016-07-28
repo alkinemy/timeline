@@ -1,4 +1,4 @@
-package com.lezhin.timeline.server.domain.assembler;
+package com.lezhin.timeline.server.domain.base.assembler;
 
 public interface Assembler<F, T> {
 
