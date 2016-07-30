@@ -1,5 +1,6 @@
 package com.lezhin.timeline.server.interfaces.api.follow.controller;
 
+import com.lezhin.timeline.server.interfaces.api.follow.dto.FollowingApiInsertForm;
 import com.lezhin.timeline.server.interfaces.api.follow.service.FollowingApiFacadeService;
 import com.lezhin.timeline.server.interfaces.api.user.dto.TimelineUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,11 @@ public class FollowingController {
 	@RequestMapping(path = "", method = RequestMethod.GET)
 	public List<TimelineUserDto> getFollowings(@PathVariable("loginId") String loginId) {
 		return followingApiFacadeService.getFollowings(loginId);
+	}
+
+	@RequestMapping(path = "", method = RequestMethod.POST)
+	public void following(@PathVariable("loginId") String loginId, FollowingApiInsertForm insertApiForm) {
+		followingApiFacadeService.addFollowing(loginId, insertApiForm);
 	}
 
 }
