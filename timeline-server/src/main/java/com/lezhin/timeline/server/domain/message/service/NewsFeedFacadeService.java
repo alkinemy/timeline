@@ -1,9 +1,7 @@
 package com.lezhin.timeline.server.domain.message.service;
 
-import com.lezhin.timeline.server.domain.message.dto.TimelineMessageNewsFeedParam;
+import com.lezhin.timeline.server.domain.message.dto.TimelineMessageNewsFeedCondition;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
-import com.lezhin.timeline.server.domain.user.model.TimelineUserEntity;
-import com.lezhin.timeline.server.domain.user.service.TimelineUserFacadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +13,13 @@ public class NewsFeedFacadeService {
 	@Autowired
 	private TimelineMessageFacadeService timelineMessageFacadeService;
 
-	@Autowired
-	private TimelineUserFacadeService timelineUserFacadeService;
-
-	public List<TimelineMessageEntity> getNewsFeed(TimelineMessageNewsFeedParam newsFeedParam) {
-		TimelineUserEntity timelineUser = timelineUserFacadeService.getTimelineUser(newsFeedParam.getLoginId());
-		TimelineMessageEntity timelineMessage = timelineMessageFacadeService.getTimelineMessage(newsFeedParam.getLastTimelineMessageId());
-		return timelineMessageFacadeService.getFollowingTimelineMessages(timelineUser, timelineMessage, newsFeedParam.getSize());
+	public List<TimelineMessageEntity> getNewsFeed(String loginId, String lastTimelineMessageId, Integer size) {
+		TimelineMessageEntity timelineMessage = timelineMessageFacadeService.getTimelineMessage(lastTimelineMessageId);
+		TimelineMessageNewsFeedCondition condition = new TimelineMessageNewsFeedCondition();
+		condition.setLoginId(loginId);
+		condition.setLastTimelineMessageId(timelineMessage.getId());
+		condition.setSize(size);
+		return timelineMessageFacadeService.getFollowingTimelineMessages(condition);
 	}
 
 }

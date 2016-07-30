@@ -10,6 +10,8 @@ import java.util.List;
 @Component
 public class TimelineMessageDtoAssembler implements ListAssembler<TimelineMessageEntity, TimelineMessageDto> {
 
+	//TODO implementation
+
 	@Override
 	public List<TimelineMessageDto> assemble(List<TimelineMessageEntity> entities) {
 		return null;

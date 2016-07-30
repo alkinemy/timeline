@@ -8,9 +8,7 @@ import lombok.Setter;
 public class TimelineMessageInsertForm {
 
 	private String loginId;
-
 	private String contents;
-
 	private String parentMessageId;
 
 }

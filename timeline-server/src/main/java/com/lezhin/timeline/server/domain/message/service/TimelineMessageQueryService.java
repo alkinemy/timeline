@@ -1,9 +1,9 @@
 package com.lezhin.timeline.server.domain.message.service;
 
+import com.lezhin.timeline.server.domain.message.dto.TimelineMessageNewsFeedCondition;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
 import com.lezhin.timeline.server.domain.message.repository.TimelineMessageRepository;
 import com.lezhin.timeline.server.domain.user.model.TimelineUser;
-import com.lezhin.timeline.server.domain.user.model.TimelineUserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +24,8 @@ public class TimelineMessageQueryService {
 		return timelineMessageRepository.findOneByMessageId(messageId);
 	}
 
-	public List<TimelineMessageEntity> findFollowingTimelineMessages(TimelineUserEntity timelineUser, TimelineMessageEntity timelineMessage, Integer size) {
-		return timelineMessageRepository.findAllFollowingTimelineMessages(timelineUser.getUser().getLoginId(), timelineMessage.getId(), size);
+	public List<TimelineMessageEntity> findFollowingTimelineMessages(TimelineMessageNewsFeedCondition condition) {
+		return timelineMessageRepository.findAllFollowingTimelineMessages(condition.getLoginId(), condition.getLastTimelineMessageId(), condition.getSize());
 	}
 
 }

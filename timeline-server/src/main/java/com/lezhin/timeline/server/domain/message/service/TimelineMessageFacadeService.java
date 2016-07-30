@@ -1,10 +1,12 @@
 package com.lezhin.timeline.server.domain.message.service;
 
 import com.lezhin.timeline.server.domain.base.assembler.SmartAssembler;
+import com.lezhin.timeline.server.domain.base.exception.Exceptions;
+import com.lezhin.timeline.server.domain.base.exception.TimelineErrorCode;
 import com.lezhin.timeline.server.domain.message.dto.TimelineMessageInsertForm;
+import com.lezhin.timeline.server.domain.message.dto.TimelineMessageNewsFeedCondition;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
 import com.lezhin.timeline.server.domain.user.model.TimelineUser;
-import com.lezhin.timeline.server.domain.user.model.TimelineUserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,11 +46,12 @@ public class TimelineMessageFacadeService {
 	}
 
 	public TimelineMessageEntity getTimelineMessage(String messageId) {
-		return timelineMessageQueryService.findOne(messageId).orElseThrow(() -> new RuntimeException("No timeline message exist")); //TODO 에러 처리;
+		return timelineMessageQueryService.findOne(messageId)
+			.orElseThrow(() -> Exceptions.newException(TimelineErrorCode.ENTITY_NOT_FOUND, messageId));
 	}
 
-	public List<TimelineMessageEntity> getFollowingTimelineMessages(TimelineUserEntity timelineUser, TimelineMessageEntity timelineMessage, Integer size) {
-		return timelineMessageQueryService.findFollowingTimelineMessages(timelineUser, timelineMessage, size);
+	public List<TimelineMessageEntity> getFollowingTimelineMessages(TimelineMessageNewsFeedCondition condition) {
+		return timelineMessageQueryService.findFollowingTimelineMessages(condition);
 	}
 
 }
