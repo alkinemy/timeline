@@ -48,8 +48,8 @@ dependencies {
     compile('org.modelmapper:modelmapper:0.7.6')
     compile('org.apache.commons:commons-lang3:3.4')
 //
-//    compile("io.projectreactor:reactor-core:${reactorVersion}")
-//    compile("io.projectreactor:reactor-bus:${reactorVersion}")
+    compile("io.projectreactor:reactor-core:${reactorVersion}")
+    compile("io.projectreactor:reactor-bus:${reactorVersion}")
 
 
 }
