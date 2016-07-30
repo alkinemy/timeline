@@ -9,7 +9,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class FollowId implements Serializable {
 
-	private String followerId;
-	private String followingId;
+	private String followerLoginId;
+	private String followingLoginId;
 
 }
