@@ -53,6 +53,7 @@ public class ActivityLogFacadeService {
 			activityLog.setTo(followingUser.getUser());
 			activityLog.setType(ActivityType.MESSAGE_CREATED);
 			activityLog.setLinkUrl(url);
+			activityLogCommandService.insert(activityLog);
 		});
 	}
 
