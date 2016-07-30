@@ -18,6 +18,9 @@ public class TimelineUserEntity extends AuditEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Column(name = "password_hash")
+	private String password;
+
 	@Embedded
 	private TimelineUser user;
 
