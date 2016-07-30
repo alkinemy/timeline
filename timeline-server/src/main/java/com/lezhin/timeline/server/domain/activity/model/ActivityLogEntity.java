@@ -22,7 +22,14 @@ public class ActivityLogEntity extends AuditEntity {
 		@AttributeOverride(name = "login_id", column = @Column(name = "from_login_id")),
 		@AttributeOverride(name = "name", column = @Column(name = "from_name")),
 	})
-	private TimelineUser fromUser;
+	private TimelineUser from;
+
+	@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name = "login_id", column = @Column(name = "to_login_id")),
+		@AttributeOverride(name = "name", column = @Column(name = "to_name")),
+	})
+	private TimelineUser to;
 
 	@Enumerated(EnumType.STRING)
 	private ActivityType type;

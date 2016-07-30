@@ -15,6 +15,9 @@ import static reactor.bus.selector.Selectors.$;
 public class TimelineMessageCreatedEventConsumer implements EventConsumer<String> {
 
 	@Autowired
+	private ActivityLogFacadeService activityLogFacadeService;
+
+	@Autowired
 	private EventBus eventBus;
 
 	@PostConstruct
@@ -23,8 +26,8 @@ public class TimelineMessageCreatedEventConsumer implements EventConsumer<String
 	}
 
 	@Override
-	public void accept(Event<String> stringEvent) {
-
+	public void accept(Event<String> event) {
+		activityLogFacadeService.logTimelineMessageCreatedEvent(event.getData());
 	}
 
 }

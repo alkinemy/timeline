@@ -16,6 +16,9 @@ import static reactor.bus.selector.Selectors.$;
 public class FollowerCreatedEventConsumer implements EventConsumer<Pair<String, String>> {
 
 	@Autowired
+	private ActivityLogFacadeService activityLogFacadeService;
+
+	@Autowired
 	private EventBus eventBus;
 
 	@PostConstruct
@@ -24,7 +27,8 @@ public class FollowerCreatedEventConsumer implements EventConsumer<Pair<String, 
 	}
 
 	@Override
-	public void accept(Event<Pair<String, String>> follow) {
+	public void accept(Event<Pair<String, String>> event) {
+		activityLogFacadeService.logFollowingCreatedEvent(event.getData().getLeft(), event.getData().getRight());
 	}
 
 }
