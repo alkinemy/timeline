@@ -3,6 +3,7 @@ package com.lezhin.timeline.server.domain.user.service;
 import com.lezhin.timeline.server.domain.activity.service.ActivityEventProducer;
 import com.lezhin.timeline.server.domain.user.dto.FollowingInsertForm;
 import com.lezhin.timeline.server.domain.user.model.TimelineUserEntity;
+import com.lezhin.timeline.server.interfaces.api.follow.service.FollowDeleteForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class FollowingFacadeService {
+public class FollowFacadeService {
 
 	@Autowired
 	private TimelineUserFacadeService timelineUserFacadeService;
@@ -32,5 +33,14 @@ public class FollowingFacadeService {
 		timelineUser.getFollowings().add(followingUser);
 
 		activityEventProducer.triggerFollowerCreatedEvent(insertForm.getLoginId(), insertForm.getFollowingLoginId());
+	}
+
+	@Transactional
+	public void delete(FollowDeleteForm deleteForm) {
+		//TODO 그냥 직접 지우는게 빠를것같음
+		TimelineUserEntity timelineUser = timelineUserFacadeService.getTimelineUser(deleteForm.getLoginId());
+		timelineUser.getFollowings().stream()
+			.filter(following -> deleteForm.getLoginId().equals(following.getUser().getLoginId()))
+			.forEach(following -> timelineUser.getFollowings().remove(following));
 	}
 }
