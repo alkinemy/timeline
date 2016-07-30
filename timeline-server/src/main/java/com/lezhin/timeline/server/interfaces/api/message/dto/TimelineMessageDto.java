@@ -1,19 +1,16 @@
 package com.lezhin.timeline.server.interfaces.api.message.dto;
 
+import com.lezhin.timeline.server.interfaces.api.user.dto.TimelineUserDto;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
 public class TimelineMessageDto {
 
 	private String messageId;
-	private String authorLoginId;
-	private String authorName;
+	private TimelineUserDto author;
 	private String contents;
-
-	private List<TimelineMessageDto> childMessages;
+	private String parentMessageId;
 
 }

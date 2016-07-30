@@ -1,7 +1,7 @@
 package com.lezhin.timeline.server.interfaces.api.follow.controller;
 
-import com.lezhin.timeline.server.interfaces.api.follow.dto.FollowDto;
-import com.lezhin.timeline.server.domain.user.service.FollowingFacadeService;
+import com.lezhin.timeline.server.interfaces.api.follow.service.FollowingApiFacadeService;
+import com.lezhin.timeline.server.interfaces.api.user.dto.TimelineUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +15,11 @@ import java.util.List;
 public class FollowingController {
 
 	@Autowired
-	private FollowingFacadeService followingFacadeService;
+	private FollowingApiFacadeService followingApiFacadeService;
 
 	@RequestMapping(path = "", method = RequestMethod.GET)
-	public List<FollowDto> getFollowings(@PathVariable("loginId") String loginId) {
-		return null;
+	public List<TimelineUserDto> getFollowings(@PathVariable("loginId") String loginId) {
+		return followingApiFacadeService.getFollowings(loginId);
 	}
 
 }
