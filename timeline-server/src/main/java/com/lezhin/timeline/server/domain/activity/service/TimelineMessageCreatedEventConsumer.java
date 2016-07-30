@@ -19,7 +19,7 @@ public class TimelineMessageCreatedEventConsumer implements EventConsumer<String
 
 	@PostConstruct
 	public void initialize() {
-		eventBus.on($(EventNameConstants.FOLLOWER_CREATED), this);
+		eventBus.on($(EventNameConstants.MESSAGE_CREATED), this);
 	}
 
 	@Override

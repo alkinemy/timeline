@@ -1,5 +1,6 @@
 package com.lezhin.timeline.server.domain.message.service;
 
+import com.lezhin.timeline.server.domain.activity.service.ActivityEventProducer;
 import com.lezhin.timeline.server.domain.base.assembler.SmartAssembler;
 import com.lezhin.timeline.server.domain.base.exception.Exceptions;
 import com.lezhin.timeline.server.domain.base.exception.TimelineErrorCode;
@@ -18,13 +19,15 @@ import java.util.List;
 public class TimelineMessageFacadeService {
 
 	@Autowired
+	private TimelineMessageQueryService timelineMessageQueryService;
+	@Autowired
 	private TimelineMessageCommandService timelineMessageCommandService;
 
 	@Autowired
 	private TimelineMessageIdService timelineMessageIdService;
 
 	@Autowired
-	private TimelineMessageQueryService timelineMessageQueryService;
+	private ActivityEventProducer activityEventProducer;
 
 	@Autowired
 	private SmartAssembler assembler;
@@ -33,6 +36,8 @@ public class TimelineMessageFacadeService {
 		TimelineMessageEntity message = createTimelineMessage(insertForm);
 		timelineMessageCommandService.insert(message);
 		log.debug("Timeline message inserted, ID: {}", message.getMessageId());
+
+		activityEventProducer.triggerTimelineMessageCreatedEvent(message.getMessageId());
 	}
 
 	private TimelineMessageEntity createTimelineMessage(TimelineMessageInsertForm insertForm) {

@@ -1,5 +1,6 @@
 package com.lezhin.timeline.server.domain.user.service;
 
+import com.lezhin.timeline.server.domain.activity.service.ActivityEventProducer;
 import com.lezhin.timeline.server.domain.user.dto.FollowingInsertForm;
 import com.lezhin.timeline.server.domain.user.model.TimelineUserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ public class FollowingFacadeService {
 	@Autowired
 	private TimelineUserFacadeService timelineUserFacadeService;
 
+	@Autowired
+	private ActivityEventProducer activityEventProducer;
+
 	@Transactional(readOnly = true)
 	public List<TimelineUserEntity> getFollowings(String loginId) {
 		TimelineUserEntity timelineUser = timelineUserFacadeService.getTimelineUser(loginId);
@@ -26,5 +30,7 @@ public class FollowingFacadeService {
 		TimelineUserEntity timelineUser = timelineUserFacadeService.getTimelineUser(insertForm.getLoginId());
 		TimelineUserEntity followingUser = timelineUserFacadeService.getTimelineUser(insertForm.getFollowingLoginId());
 		timelineUser.getFollowings().add(followingUser);
+
+		activityEventProducer.triggerFollowerCreatedEvent(insertForm.getLoginId(), insertForm.getFollowingLoginId());
 	}
 }

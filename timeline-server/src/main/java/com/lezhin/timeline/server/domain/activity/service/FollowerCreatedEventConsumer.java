@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct;
 import static reactor.bus.selector.Selectors.$;
 
 @Service
-public class FollowingCreatedEventConsumer implements EventConsumer<Pair<String, String>> {
+public class FollowerCreatedEventConsumer implements EventConsumer<Pair<String, String>> {
 
 	@Autowired
 	private EventBus eventBus;
