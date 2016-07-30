@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "timeline_follow_mappings")
 @IdClass(FollowId.class)
-public class TimelineFollowMapping {
+public class TimelineFollowMappingEntity {
 
 	@Id
 	@Column(name = "follower_login_id")

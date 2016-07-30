@@ -5,5 +5,5 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FollowDto {
+public class TimelineUserDto {
 }

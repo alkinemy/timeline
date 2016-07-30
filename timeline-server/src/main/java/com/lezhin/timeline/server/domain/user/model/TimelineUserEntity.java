@@ -22,6 +22,7 @@ public class TimelineUserEntity extends AuditEntity {
 	private TimelineUser user;
 
 
+	//TODO 나는 나를 팔로우하는걸로 처리
 	@ManyToMany
 	@JoinTable(name = "timeline_users",
 		joinColumns = @JoinColumn(name = "follower_login_id"), inverseJoinColumns = @JoinColumn(name = "following_login_id"))
