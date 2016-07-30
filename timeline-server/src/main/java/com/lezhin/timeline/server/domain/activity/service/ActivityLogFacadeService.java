@@ -7,6 +7,8 @@ import com.lezhin.timeline.server.domain.message.service.TimelineMessageFacadeSe
 import com.lezhin.timeline.server.domain.user.model.TimelineUserEntity;
 import com.lezhin.timeline.server.domain.user.service.TimelineUserFacadeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,8 @@ public class ActivityLogFacadeService {
 	@Autowired
 	private TimelineMessageFacadeService timelineMessageFacadeService;
 
+	@Autowired
+	private ActivityLogQueryService activityLogQueryService;
 	@Autowired
 	private ActivityLogCommandService activityLogCommandService;
 
@@ -55,6 +59,10 @@ public class ActivityLogFacadeService {
 			activityLog.setLinkUrl(url);
 			activityLogCommandService.insert(activityLog);
 		});
+	}
+
+	public Page<ActivityLogEntity> getActivityLogs(String loginId, Pageable pageable) {
+		return activityLogQueryService.findAllByToLoginId(loginId, pageable);
 	}
 
 }
