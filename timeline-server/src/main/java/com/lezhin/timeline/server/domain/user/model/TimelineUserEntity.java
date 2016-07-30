@@ -24,12 +24,12 @@ public class TimelineUserEntity extends AuditEntity {
 
 	//TODO 나는 나를 팔로우하는걸로 처리
 	@ManyToMany
-	@JoinTable(name = "timeline_users",
+	@JoinTable(name = "timeline_follow_mappings",
 		joinColumns = @JoinColumn(name = "follower_login_id"), inverseJoinColumns = @JoinColumn(name = "following_login_id"))
 	private List<TimelineUserEntity> followings = new ArrayList<>();
 
 	@ManyToMany
-	@JoinTable(name = "timeline_users",
+	@JoinTable(name = "timeline_follow_mappings",
 		joinColumns = @JoinColumn(name = "following_login_id"), inverseJoinColumns = @JoinColumn(name = "follower_login_id"))
 	private List<TimelineUserEntity> followers = new ArrayList<>();
 

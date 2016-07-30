@@ -23,7 +23,7 @@ public class TimelineUserFacadeService {
 	@Transactional(readOnly = true)
 	public List<TimelineUserEntity> getFollowings(String loginId) {
 		TimelineUserEntity timelineUser = getTimelineUser(loginId);
-		timelineUser.getFollowings().size(); //TODO 강제 로딩을 위해 호출
+		timelineUser.getFollowings().size(); //강제 로딩을 위해 호출
 		return timelineUser.getFollowings();
 	}
 
