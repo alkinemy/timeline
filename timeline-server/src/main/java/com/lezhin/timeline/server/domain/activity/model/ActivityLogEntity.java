@@ -19,14 +19,14 @@ public class ActivityLogEntity extends AuditEntity {
 
 	@Embedded
 	@AttributeOverrides({
-		@AttributeOverride(name = "login_id", column = @Column(name = "from_login_id")),
+		@AttributeOverride(name = "loginId", column = @Column(name = "from_login_id")),
 		@AttributeOverride(name = "name", column = @Column(name = "from_name")),
 	})
 	private TimelineUser from;
 
 	@Embedded
 	@AttributeOverrides({
-		@AttributeOverride(name = "login_id", column = @Column(name = "to_login_id")),
+		@AttributeOverride(name = "loginId", column = @Column(name = "to_login_id")),
 		@AttributeOverride(name = "name", column = @Column(name = "to_name")),
 	})
 	private TimelineUser to;

@@ -20,14 +20,14 @@ public class TimelineFollowEntity extends AuditEntity {
 
 	@Embedded
 	@AttributeOverrides({
-		@AttributeOverride(name = "login_id", column = @Column(name = "follower_login_id")),
+		@AttributeOverride(name = "loginId", column = @Column(name = "follower_login_id")),
 		@AttributeOverride(name = "name", column = @Column(name = "follower_name")),
 	})
 	private TimelineUser follower;
 
 	@Embedded
 	@AttributeOverrides({
-		@AttributeOverride(name = "login_id", column = @Column(name = "following_login_id")),
+		@AttributeOverride(name = "loginId", column = @Column(name = "following_login_id")),
 		@AttributeOverride(name = "name", column = @Column(name = "following_name")),
 	})
 	private TimelineUser following;

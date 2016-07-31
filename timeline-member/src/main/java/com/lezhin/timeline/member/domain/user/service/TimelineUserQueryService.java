@@ -16,7 +16,7 @@ public class TimelineUserQueryService {
 
 	@Transactional(readOnly = true)
 	public Optional<TimelineUserEntity> findOneByLoginId(String loginId) {
-		return timelineUserRepository.findOneByLoginId(loginId);
+		return timelineUserRepository.findOneByUserLoginId(loginId);
 	}
 
 }

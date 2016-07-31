@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface TimelineUserRepository extends TimelineJpaRepository<TimelineUserEntity, Long> {
 
-	Optional<TimelineUserEntity> findOneByLoginId(String loginId);
+	Optional<TimelineUserEntity> findOneByUserLoginId(String loginId);
 
 }
