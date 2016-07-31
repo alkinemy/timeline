@@ -1,7 +1,7 @@
 package com.lezhin.timeline.server.domain.activity.model;
 
 import com.lezhin.timeline.server.domain.base.entity.AuditEntity;
-import com.lezhin.timeline.server.domain.user.model.TimelineUser;
+import com.lezhin.timeline.server.domain.common.user.TimelineUser;
 import lombok.Getter;
 import lombok.Setter;
 

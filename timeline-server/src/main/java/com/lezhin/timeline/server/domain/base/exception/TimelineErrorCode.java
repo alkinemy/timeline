@@ -1,9 +1,13 @@
 package com.lezhin.timeline.server.domain.base.exception;
 
+import com.lezhin.timeline.common.domain.base.exception.EntityNotFoundException;
+import com.lezhin.timeline.common.domain.base.exception.ErrorCode;
+import com.lezhin.timeline.common.domain.base.exception.MessageException;
 import lombok.Getter;
 
 @Getter
 public enum TimelineErrorCode implements ErrorCode {
+
 	INTERNAL("Internal error"),
 	ENTITY_NOT_FOUND("Entity is not found", EntityNotFoundException.class),
 	;
@@ -19,4 +23,5 @@ public enum TimelineErrorCode implements ErrorCode {
 		this.defaultMessage = defaultMessage;
 		this.exceptionClass = exceptionClass;
 	}
+
 }

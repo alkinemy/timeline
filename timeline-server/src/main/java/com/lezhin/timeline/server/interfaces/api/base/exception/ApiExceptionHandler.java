@@ -1,6 +1,7 @@
 package com.lezhin.timeline.server.interfaces.api.base.exception;
 
-import com.lezhin.timeline.server.domain.base.exception.MessageException;
+import com.lezhin.timeline.common.domain.base.exception.MessageException;
+import com.lezhin.timeline.common.interfaces.base.exception.ApiError;
 import com.lezhin.timeline.server.domain.base.exception.TimelineErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

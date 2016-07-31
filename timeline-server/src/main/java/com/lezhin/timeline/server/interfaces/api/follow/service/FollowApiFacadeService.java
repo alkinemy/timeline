@@ -1,9 +1,9 @@
 package com.lezhin.timeline.server.interfaces.api.follow.service;
 
 import com.lezhin.timeline.server.domain.base.assembler.SmartAssembler;
-import com.lezhin.timeline.server.domain.user.dto.FollowingInsertForm;
+import com.lezhin.timeline.server.domain.follow.dto.FollowingInsertForm;
 import com.lezhin.timeline.server.domain.user.model.TimelineUserEntity;
-import com.lezhin.timeline.server.domain.user.service.FollowFacadeService;
+import com.lezhin.timeline.server.domain.follow.service.FollowFacadeService;
 import com.lezhin.timeline.server.interfaces.api.follow.dto.FollowingApiInsertForm;
 import com.lezhin.timeline.server.interfaces.api.follow.dto.UnfollowApiForm;
 import com.lezhin.timeline.server.interfaces.api.user.dto.TimelineUserDto;

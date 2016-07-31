@@ -1,9 +1,9 @@
 package com.lezhin.timeline.server.domain.message.assembler;
 
-import com.lezhin.timeline.server.domain.base.assembler.AbstractAssembler;
+import com.lezhin.timeline.common.domain.base.assembler.AbstractAssembler;
 import com.lezhin.timeline.server.domain.message.dto.TimelineMessageInsertForm;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
-import com.lezhin.timeline.server.domain.user.model.TimelineUser;
+import com.lezhin.timeline.server.domain.common.user.TimelineUser;
 import com.lezhin.timeline.server.domain.user.service.TimelineUserFacadeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

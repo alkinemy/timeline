@@ -1,6 +1,6 @@
 package com.lezhin.timeline.server.interfaces.api.message.assembler;
 
-import com.lezhin.timeline.server.domain.base.assembler.AbstractAssembler;
+import com.lezhin.timeline.common.domain.base.assembler.AbstractAssembler;
 import com.lezhin.timeline.server.domain.base.assembler.SmartAssembler;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
 import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineMessageDto;

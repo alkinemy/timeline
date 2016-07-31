@@ -4,7 +4,7 @@ import com.lezhin.timeline.server.domain.base.assembler.SmartAssembler;
 import com.lezhin.timeline.server.domain.message.dto.TimelineMessageInsertForm;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
 import com.lezhin.timeline.server.domain.message.service.TimelineMessageFacadeService;
-import com.lezhin.timeline.server.domain.user.model.TimelineUser;
+import com.lezhin.timeline.server.domain.common.user.TimelineUser;
 import com.lezhin.timeline.server.domain.user.service.TimelineUserFacadeService;
 import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineMessageDto;
 import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineMessageInsertApiForm;

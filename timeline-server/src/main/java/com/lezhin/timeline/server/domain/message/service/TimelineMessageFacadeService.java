@@ -1,13 +1,13 @@
 package com.lezhin.timeline.server.domain.message.service;
 
+import com.lezhin.timeline.common.domain.base.assembler.SmartAssembler;
+import com.lezhin.timeline.common.domain.base.exception.Exceptions;
 import com.lezhin.timeline.server.domain.activity.service.ActivityEventProducer;
-import com.lezhin.timeline.server.domain.base.assembler.SmartAssembler;
-import com.lezhin.timeline.server.domain.base.exception.Exceptions;
 import com.lezhin.timeline.server.domain.base.exception.TimelineErrorCode;
 import com.lezhin.timeline.server.domain.message.dto.TimelineMessageInsertForm;
 import com.lezhin.timeline.server.domain.message.dto.TimelineMessageNewsFeedCondition;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
-import com.lezhin.timeline.server.domain.user.model.TimelineUser;
+import com.lezhin.timeline.server.domain.common.user.TimelineUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
