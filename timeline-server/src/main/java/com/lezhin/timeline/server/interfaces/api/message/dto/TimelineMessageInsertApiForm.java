@@ -8,7 +8,6 @@ import lombok.Setter;
 public class TimelineMessageInsertApiForm {
 
 	private String contents;
-
 	private String parentMessageId;
 
 }

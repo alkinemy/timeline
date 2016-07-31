@@ -3,7 +3,6 @@ package com.lezhin.timeline.server.domain.message.service;
 import com.lezhin.timeline.server.domain.message.dto.TimelineMessageNewsFeedCondition;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
 import com.lezhin.timeline.server.domain.message.repository.TimelineMessageRepository;
-import com.lezhin.timeline.server.domain.common.user.TimelineUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +15,8 @@ public class TimelineMessageQueryService {
 	@Autowired
 	private TimelineMessageRepository timelineMessageRepository;
 
-	public List<TimelineMessageEntity> findAll(TimelineUser user) {
-		return timelineMessageRepository.findAllByAuthorLoginId(user.getLoginId());
+	public List<TimelineMessageEntity> findAll(String loginId) {
+		return timelineMessageRepository.findAllByAuthorLoginId(loginId);
 	}
 
 	public Optional<TimelineMessageEntity>findOne(String messageId) {

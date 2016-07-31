@@ -7,7 +7,6 @@ import com.lezhin.timeline.server.domain.base.exception.TimelineErrorCode;
 import com.lezhin.timeline.server.domain.message.dto.TimelineMessageInsertForm;
 import com.lezhin.timeline.server.domain.message.dto.TimelineMessageNewsFeedCondition;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
-import com.lezhin.timeline.server.domain.common.user.TimelineUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,8 +45,8 @@ public class TimelineMessageFacadeService {
 		return message;
 	}
 
-	public List<TimelineMessageEntity> getTimelineMessages(TimelineUser user) {
-		return timelineMessageQueryService.findAll(user);
+	public List<TimelineMessageEntity> getTimelineMessages(String loginId) {
+		return timelineMessageQueryService.findAll(loginId);
 	}
 
 	public TimelineMessageEntity getTimelineMessage(String messageId) {

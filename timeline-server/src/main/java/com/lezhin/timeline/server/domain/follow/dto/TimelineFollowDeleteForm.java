@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FollowingInsertForm {
+public class TimelineFollowDeleteForm {
 
 	private String loginId;
 	private String followingLoginId;

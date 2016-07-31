@@ -4,10 +4,9 @@ import com.lezhin.timeline.server.domain.base.assembler.SmartAssembler;
 import com.lezhin.timeline.server.domain.message.dto.TimelineMessageInsertForm;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
 import com.lezhin.timeline.server.domain.message.service.TimelineMessageFacadeService;
-import com.lezhin.timeline.server.domain.common.user.TimelineUser;
-import com.lezhin.timeline.server.domain.user.service.TimelineUserFacadeService;
 import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineMessageDto;
 import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineMessageInsertApiForm;
+import com.lezhin.timeline.server.interfaces.api.user.dto.TimelineUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,20 +19,16 @@ public class TimelineMessageApiFacadeService {
 	private TimelineMessageFacadeService timelineMessageFacadeService;
 
 	@Autowired
-	private TimelineUserFacadeService timelineUserFacadeService;
-
-	@Autowired
 	private SmartAssembler assembler;
 
-	public void postMessage(String loginId, TimelineMessageInsertApiForm insertApiForm) {
+	public void postMessage(TimelineUserDto user, TimelineMessageInsertApiForm insertApiForm) {
 		TimelineMessageInsertForm insertForm = assembler.assemble(insertApiForm, TimelineMessageInsertForm.class);
-		insertForm.setLoginId(loginId);
+		insertForm.setUser(user);
 		timelineMessageFacadeService.insert(insertForm);
 	}
 
-	public List<TimelineMessageDto> listMessages(String loginId) {
-		TimelineUser user = timelineUserFacadeService.getTimelineUser(loginId).getUser();
-		List<TimelineMessageEntity> timelineMessages = timelineMessageFacadeService.getTimelineMessages(user);
+	public List<TimelineMessageDto> listMessages(TimelineUserDto user) {
+		List<TimelineMessageEntity> timelineMessages = timelineMessageFacadeService.getTimelineMessages(user.getLoginId());
 		return assembler.assemble(timelineMessages, TimelineMessageDto.class);
 	}
 }

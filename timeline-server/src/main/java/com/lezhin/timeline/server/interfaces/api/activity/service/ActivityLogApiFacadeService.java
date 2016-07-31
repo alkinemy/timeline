@@ -5,6 +5,7 @@ import com.lezhin.timeline.server.domain.activity.service.ActivityLogFacadeServi
 import com.lezhin.timeline.server.domain.base.assembler.SmartAssembler;
 import com.lezhin.timeline.server.interfaces.api.activity.dto.ActivityLogDto;
 import com.lezhin.timeline.server.interfaces.api.base.response.PagedResources;
+import com.lezhin.timeline.server.interfaces.api.user.dto.TimelineUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,8 +20,8 @@ public class ActivityLogApiFacadeService {
 	@Autowired
 	private SmartAssembler assembler;
 
-	public PagedResources<ActivityLogDto> getActivityLogs(String loginId, Pageable pageable) {
-		Page<ActivityLogEntity> activityLogEntities = activityLogFacadeService.getActivityLogs(loginId, pageable);
+	public PagedResources<ActivityLogDto> getActivityLogs(TimelineUserDto user, Pageable pageable) {
+		Page<ActivityLogEntity> activityLogEntities = activityLogFacadeService.getActivityLogs(user.getLoginId(), pageable);
 		Page<ActivityLogDto> activityLogs = assembler.assemble(pageable, activityLogEntities, ActivityLogDto.class);
 		return new PagedResources<>(activityLogs);
 	}

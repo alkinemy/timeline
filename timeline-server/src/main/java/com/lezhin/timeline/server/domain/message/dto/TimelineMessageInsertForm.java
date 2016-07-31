@@ -1,5 +1,6 @@
 package com.lezhin.timeline.server.domain.message.dto;
 
+import com.lezhin.timeline.server.interfaces.api.user.dto.TimelineUserDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class TimelineMessageInsertForm {
 
-	private String loginId;
+	private TimelineUserDto user;
 	private String contents;
 	private String parentMessageId;
 

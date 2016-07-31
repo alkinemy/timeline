@@ -7,7 +7,6 @@ import lombok.Setter;
 @Setter
 public class TimelineNewsFeedParam {
 
-	private String loginId;
 	private Integer size;
 	private String lastTimelineMessageId;
 

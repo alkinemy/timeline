@@ -13,7 +13,6 @@ public class TimelineUserCommandService {
 
 	public void insert(TimelineUserEntity entity) {
 		//TODO client에서 rest로 호출처리 필요
-		entity.getFollowings().add(entity);
 		timelineUserRepository.save(entity);
 	}
 
