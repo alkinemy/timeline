@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/{loginId}")
+@RequestMapping("/users")
 public class TimelineUserController {
 
 	@Autowired
 	private TimelineUserApiFacadeService timelineUserApiFacadeService;
 
-	@RequestMapping(path = "", method = RequestMethod.GET)
-	public TimelineUserDto getTimelineUser(@PathVariable String loginId) {
+	@RequestMapping(path = "/{loginId}", method = RequestMethod.GET)
+	public TimelineUserDto getTimelineUser(@PathVariable("loginId") String loginId) {
 		return timelineUserApiFacadeService.getTimelineUser(loginId);
 	}
 
