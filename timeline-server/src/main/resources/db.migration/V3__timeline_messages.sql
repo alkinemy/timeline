@@ -10,6 +10,6 @@ CREATE TABLE `timeline`.`timeline_messages` (
   `modified_date` DATETIME NOT NULL COMMENT '변경 일시',
 
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `timeline_messages_uk01` (`message_id`),
+  UNIQUE INDEX `timeline_messages_uk01` (`message_id`)
 
 ) ENGINE = InnoDB CHARACTER SET = utf8 COMMENT = '타임라인 메시지';
