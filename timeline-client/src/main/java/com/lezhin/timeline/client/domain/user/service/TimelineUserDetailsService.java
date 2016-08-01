@@ -1,6 +1,5 @@
 package com.lezhin.timeline.client.domain.user.service;
 
-import com.lezhin.timeline.client.domain.member.service.TimelineMemberAdapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,11 +17,11 @@ import java.util.Optional;
 public class TimelineUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	private TimelineMemberAdapterService timelineMemberAdapterService;
+	private TimelineUserAdapterService timelineUserAdapterService;
 
 	@Override
 	public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
-		return Optional.ofNullable(timelineMemberAdapterService.getUser(loginId))
+		return Optional.ofNullable(timelineUserAdapterService.getUser(loginId))
 			.map(user -> {
 				List<GrantedAuthority> authorities = new ArrayList<>();
 				authorities.add(new SimpleGrantedAuthority("ROLE_USER"));

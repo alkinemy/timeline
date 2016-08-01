@@ -1,6 +1,6 @@
-package com.lezhin.timeline.client.domain.member.service;
+package com.lezhin.timeline.client.domain.user.service;
 
-import com.lezhin.timeline.client.config.TimelineMemberRestProperties;
+import com.lezhin.timeline.client.config.TimelineUserRestProperties;
 import com.lezhin.timeline.client.domain.user.dto.TimelineUserDto;
 import com.lezhin.timeline.client.domain.user.dto.TimelineUserInsertForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class TimelineMemberAdapterService {
+public class TimelineUserAdapterService {
 
 	@Autowired
 	private RestTemplate timelineRestTemplate;
@@ -21,17 +21,17 @@ public class TimelineMemberAdapterService {
 	private RetryTemplate timelineRetryTemplate;
 
 	@Autowired
-	private TimelineMemberRestProperties timelineMemberRestProperties;
+	private TimelineUserRestProperties timelineUserRestProperties;
 
 	public TimelineUserDto getUser(String loginId) {
-		String url = new StringBuilder().append(timelineMemberRestProperties.getBaseUrl()).append("/users/{loginId}").toString();
+		String url = new StringBuilder().append(timelineUserRestProperties.getBaseUrl()).append("/users/{loginId}").toString();
 		Map<String, Object> params = new HashMap<>();
 		params.put("loginId", loginId);
 		return timelineRetryTemplate.execute(context -> timelineRestTemplate.getForObject(url, TimelineUserDto.class, params));
 	}
 
 	public void registerUser(TimelineUserInsertForm insertForm) {
-		String url = new StringBuilder().append(timelineMemberRestProperties.getBaseUrl()).append("/users").toString();
+		String url = new StringBuilder().append(timelineUserRestProperties.getBaseUrl()).append("/users").toString();
 		timelineRetryTemplate.execute(context -> timelineRestTemplate.postForObject(url, insertForm, Void.class));
 	}
 

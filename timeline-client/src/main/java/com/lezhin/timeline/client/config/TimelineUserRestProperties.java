@@ -6,8 +6,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "timeline.rest.member")
-public class TimelineMemberRestProperties {
+@ConfigurationProperties(prefix = "timeline.rest.user")
+public class TimelineUserRestProperties {
 
 	private String baseUrl;
 

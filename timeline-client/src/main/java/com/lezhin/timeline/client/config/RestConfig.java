@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 @EnableRetry
 @Configuration
-@EnableConfigurationProperties({ RestProperties.class, TimelineServerRestProperties.class, TimelineMemberRestProperties.class })
+@EnableConfigurationProperties({ RestProperties.class, TimelineServerRestProperties.class, TimelineUserRestProperties.class })
 public class RestConfig {
 
 	@Bean
