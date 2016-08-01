@@ -21,7 +21,7 @@ public class TimelineMessageEntity extends AuditEntity {
 
 	@Embedded
 	@AttributeOverrides({
-		@AttributeOverride(name = "login_id", column = @Column(name = "author_login_id")),
+		@AttributeOverride(name = "loginId", column = @Column(name = "author_login_id")),
 		@AttributeOverride(name = "name", column = @Column(name = "author_name")),
 	})
 	private TimelineUser author;
