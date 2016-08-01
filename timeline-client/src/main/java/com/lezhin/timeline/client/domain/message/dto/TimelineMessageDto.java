@@ -4,6 +4,8 @@ import com.lezhin.timeline.client.domain.user.dto.TimelineUserDto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class TimelineMessageDto {
@@ -12,5 +14,6 @@ public class TimelineMessageDto {
 	private TimelineUserDto author;
 	private String contents;
 	private String parentMessageId;
+	private LocalDateTime createdDate;
 
 }
