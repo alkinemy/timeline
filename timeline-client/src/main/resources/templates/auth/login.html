@@ -5,7 +5,7 @@
 <form action="/login" method="post">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <label>
-        ID: <input type="text" name="username" />
+        ID: <input type="text" name="loginId" />
     </label>
     <label>
         PASSWORD: <input type="password" name="password" />

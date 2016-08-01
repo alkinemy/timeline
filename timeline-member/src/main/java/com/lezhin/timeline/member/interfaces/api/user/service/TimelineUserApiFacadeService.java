@@ -19,7 +19,7 @@ public class TimelineUserApiFacadeService {
 
 	public TimelineUserDto getTimelineUser(String loginId) {
 		TimelineUserEntity timelineUserEntity = timelineUserFacadeService.getTimelineUser(loginId);
-		return assembler.assemble(timelineUserEntity.getUser(), TimelineUserDto.class);
+		return assembler.assemble(timelineUserEntity, TimelineUserDto.class);
 	}
 
 	public void register(TimelineUserInsertForm insertForm) {

@@ -8,6 +8,9 @@ import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class TimelineMemberAdapterService {
 
@@ -22,7 +25,9 @@ public class TimelineMemberAdapterService {
 
 	public TimelineUserDto getUser(String loginId) {
 		String url = new StringBuilder().append(timelineMemberRestProperties.getBaseUrl()).append("/users/{loginId}").toString();
-		return timelineRetryTemplate.execute(context -> timelineRestTemplate.getForObject(url, TimelineUserDto.class, loginId));
+		Map<String, Object> params = new HashMap<>();
+		params.put("loginId", loginId);
+		return timelineRetryTemplate.execute(context -> timelineRestTemplate.getForObject(url, TimelineUserDto.class, params));
 	}
 
 	public void registerUser(TimelineUserInsertForm insertForm) {
