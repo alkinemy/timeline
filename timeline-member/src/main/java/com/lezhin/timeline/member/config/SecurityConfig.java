@@ -23,13 +23,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.httpBasic()
 			.and()
-			.csrf().disable()
-			.antMatcher("/api/**")
-			.authorizeRequests().anyRequest().hasRole("API")
+				.csrf().disable()
+				.antMatcher("/api/**")
+				.authorizeRequests().anyRequest().hasRole("API")
 			.and()
 //			.addFilterAfter()
-			.exceptionHandling()
-			.authenticationEntryPoint(http403ForbiddenEntryPoint());
+				.exceptionHandling()
+				.authenticationEntryPoint(http403ForbiddenEntryPoint());
 	}
 
 	@Bean

@@ -27,15 +27,13 @@ public class TimelineFollowApiFacadeService {
 		return assembler.assemble(followings, TimelineUserDto.class);
 	}
 
-	public void addFollowing(TimelineUserDto user, FollowingApiInsertForm insertApiForm) {
+	public void addFollowing(FollowingApiInsertForm insertApiForm) {
 		TimelineFollowingInsertForm insertForm = assembler.assemble(insertApiForm, TimelineFollowingInsertForm.class);
-		insertForm.setFollower(user);
 		timelineFollowFacadeService.insert(insertForm);
 	}
 
-	public void unfollowing(TimelineUserDto user, UnfollowApiForm unfollowApiForm) {
+	public void unfollowing(UnfollowApiForm unfollowApiForm) {
 		TimelineFollowDeleteForm timelineFollowDeleteForm = assembler.assemble(unfollowApiForm, TimelineFollowDeleteForm.class);
-		timelineFollowDeleteForm.setLoginId(user.getLoginId());
 		timelineFollowFacadeService.delete(timelineFollowDeleteForm);
 	}
 

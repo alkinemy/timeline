@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/followings")
+@RequestMapping("/api/follows")
 public class TimelineFollowController {
 
 	@Autowired
@@ -24,13 +24,13 @@ public class TimelineFollowController {
 	}
 
 	@RequestMapping(path = "", method = RequestMethod.POST)
-	public void following(TimelineUserDto user, FollowingApiInsertForm insertApiForm) {
-		timelineFollowApiFacadeService.addFollowing(user, insertApiForm);
+	public void following(FollowingApiInsertForm insertApiForm) {
+		timelineFollowApiFacadeService.addFollowing(insertApiForm);
 	}
 
 	@RequestMapping(path = "", method = RequestMethod.DELETE)
-	public void unfollow(TimelineUserDto user, UnfollowApiForm unfollowApiForm) {
-		timelineFollowApiFacadeService.unfollowing(user, unfollowApiForm);
+	public void unfollow(UnfollowApiForm unfollowApiForm) {
+		timelineFollowApiFacadeService.unfollowing(unfollowApiForm);
 	}
 
 }

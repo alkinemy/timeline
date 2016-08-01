@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class TimelineFollowDeleteForm {
 
-	private String loginId;
+	private String followerLoginId;
 	private String followingLoginId;
 
 }

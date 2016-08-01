@@ -1,6 +1,7 @@
 package com.lezhin.timeline.client.domain.follow.service;
 
 import com.lezhin.timeline.client.config.TimelineServerRestProperties;
+import com.lezhin.timeline.client.domain.follow.dto.TimelineFollowInsertForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,10 @@ public class TimelineFollowAdapterService {
 
 	@Autowired
 	private TimelineServerRestProperties timelineServerRestProperties;
-	//		agentRetryTemplate.execute(context -> agentRestTemplate.postForEntity(agentProperties.getCallbackDeliverUrl(), response, Void.class));
+
+	public void addFollowing(TimelineFollowInsertForm followInsertForm) {
+		String url = new StringBuilder().append(timelineServerRestProperties.getBaseUrl()).append("/follows").toString();
+		timelineRetryTemplate.execute(context -> timelineRestTemplate.postForObject(url, followInsertForm, Void.class));
+	}
 
 }

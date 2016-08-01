@@ -17,9 +17,8 @@ public class TimelineMessageController {
 	private TimelineMessageApiFacadeService timelineMessageApiFacadeService;
 
 	@RequestMapping(path = "", method = RequestMethod.POST)
-	public void post(TimelineUserDto user, @RequestBody TimelineMessageInsertApiForm insertApiForm) {
-		//TODO 인증 정보 확인 필요
-		timelineMessageApiFacadeService.postMessage(user, insertApiForm);
+	public void post(@RequestBody TimelineMessageInsertApiForm insertApiForm) {
+		timelineMessageApiFacadeService.postMessage(insertApiForm);
 	}
 
 	@RequestMapping(path = "", method = RequestMethod.GET)

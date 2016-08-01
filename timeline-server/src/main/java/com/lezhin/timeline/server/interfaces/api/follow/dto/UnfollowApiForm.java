@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class UnfollowApiForm {
 
+	private String followerLoginId;
 	private String followingLoginId;
 
 }

@@ -45,7 +45,7 @@ public class TimelineFollowFacadeService {
 
 	@Transactional
 	public void delete(TimelineFollowDeleteForm deleteForm) {
-		timelineFollowCommandService.delete(deleteForm.getLoginId(), deleteForm.getFollowingLoginId());
+		timelineFollowCommandService.delete(deleteForm.getFollowerLoginId(), deleteForm.getFollowingLoginId());
 	}
 
 }

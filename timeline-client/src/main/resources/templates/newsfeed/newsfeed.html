@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h1 th:text="${userName}"></h1>
+<div>
+    <div th:replace="message/message-input">message input</div>
+    <div th:each="message : ${timelineMessages}">
+        <div th:replace="message/message">message!</div>
+    </div>
+</div>
+</body>
+</html>

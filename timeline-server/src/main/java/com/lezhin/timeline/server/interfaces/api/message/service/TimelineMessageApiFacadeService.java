@@ -21,9 +21,8 @@ public class TimelineMessageApiFacadeService {
 	@Autowired
 	private SmartAssembler assembler;
 
-	public void postMessage(TimelineUserDto user, TimelineMessageInsertApiForm insertApiForm) {
+	public void postMessage(TimelineMessageInsertApiForm insertApiForm) {
 		TimelineMessageInsertForm insertForm = assembler.assemble(insertApiForm, TimelineMessageInsertForm.class);
-		insertForm.setUser(user);
 		timelineMessageFacadeService.insert(insertForm);
 	}
 

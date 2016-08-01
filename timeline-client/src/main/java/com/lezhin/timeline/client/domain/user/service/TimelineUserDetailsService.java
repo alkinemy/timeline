@@ -1,9 +1,9 @@
 package com.lezhin.timeline.client.domain.user.service;
 
+import com.lezhin.timeline.client.domain.user.model.TimelineUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,7 +25,7 @@ public class TimelineUserDetailsService implements UserDetailsService {
 			.map(user -> {
 				List<GrantedAuthority> authorities = new ArrayList<>();
 				authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-				return new User(user.getLoginId(), user.getPassword(), authorities);
+				return new TimelineUser(user.getLoginId(), user.getPassword(), user.getName(), authorities);
 			}).orElseThrow(() -> new UsernameNotFoundException("User " + loginId + " was not found"));
 	}
 

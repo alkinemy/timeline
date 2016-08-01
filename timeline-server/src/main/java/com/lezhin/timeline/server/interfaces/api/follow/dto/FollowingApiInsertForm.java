@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class FollowingApiInsertForm {
 
+	private TimelineUserDto follower;
 	private TimelineUserDto following;
 
 }
