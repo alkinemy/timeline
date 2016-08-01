@@ -34,13 +34,15 @@ public class TimelineFollowFacadeService {
 		return follows.stream().map(TimelineFollowEntity::getFollowing).collect(Collectors.toList());
 	}
 
-	@Transactional(readOnly = true)
+	@Transactional
 	public void insert(TimelineFollowingInsertForm insertForm) {
 		TimelineFollowEntity timelineFollowEntity = assembler.assemble(insertForm, TimelineFollowEntity.class);
 		timelineFollowCommandService.insert(timelineFollowEntity);
 
-		FollowingCreatedEventForm followingCreatedEventForm = assembler.assemble(insertForm, FollowingCreatedEventForm.class);
-		activityEventProducer.triggerFollowerCreatedEvent(followingCreatedEventForm);
+		if (!insertForm.getFollower().getLoginId().equals(insertForm.getFollowing().getLoginId())) {
+			FollowingCreatedEventForm followingCreatedEventForm = assembler.assemble(insertForm, FollowingCreatedEventForm.class);
+			activityEventProducer.triggerFollowerCreatedEvent(followingCreatedEventForm);
+		}
 	}
 
 	@Transactional

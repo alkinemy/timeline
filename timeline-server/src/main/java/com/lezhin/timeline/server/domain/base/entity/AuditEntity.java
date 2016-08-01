@@ -21,6 +21,6 @@ public class AuditEntity implements Serializable {
 	private LocalDateTime createdDate;
 
 	@LastModifiedDate
-	private LocalDateTime modifiedDate;
+	private LocalDateTime lastModifiedDate;
 
 }

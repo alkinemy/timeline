@@ -18,7 +18,7 @@ public class TimelineFollowingEntityAssembler extends AbstractAssembler<Timeline
 	protected TimelineFollowEntity doAssemble(TimelineFollowingInsertForm insertForm) {
 		TimelineFollowEntity entity = new TimelineFollowEntity();
 		entity.setFollower(assembler.assemble(insertForm.getFollower(), TimelineUser.class));
-		entity.setFollower(assembler.assemble(insertForm.getFollowing(), TimelineUser.class));
+		entity.setFollowing(assembler.assemble(insertForm.getFollowing(), TimelineUser.class));
 		return entity;
 	}
 

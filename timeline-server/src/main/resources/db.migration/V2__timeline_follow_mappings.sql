@@ -1,4 +1,4 @@
-CREATE TABLE `timeline`.`timeline_follow_mappings` (
+CREATE TABLE `timeline`.`timeline_follows` (
 
   `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'pk',
   `follower_login_id` VARCHAR(100) NOT NULL COMMENT '팔로워 login id',
