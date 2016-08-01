@@ -17,4 +17,7 @@ public class RestProperties {
 	private long initialInterval = 3 * 100L;
 	private long maxInterval = 1000L;
 
+	private String username;
+	private String password;
+
 }

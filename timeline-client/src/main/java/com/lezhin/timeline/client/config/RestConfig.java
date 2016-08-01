@@ -1,5 +1,6 @@
 package com.lezhin.timeline.client.config;
 
+import com.lezhin.timeline.client.web.base.interceptor.BasicAuthInterceptor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +19,9 @@ public class RestConfig {
 
 	@Bean
 	public RestTemplate timelineRestTemplate(RestProperties restProperties) {
-		return new RestTemplate(clientHttpRequestFactory(restProperties));
+		RestTemplate restTemplate = new RestTemplate(clientHttpRequestFactory(restProperties));
+		restTemplate.getInterceptors().add(new BasicAuthInterceptor(restProperties.getUsername(), restProperties.getPassword()));
+		return restTemplate;
 	}
 
 	private ClientHttpRequestFactory clientHttpRequestFactory(RestProperties restProperties) {

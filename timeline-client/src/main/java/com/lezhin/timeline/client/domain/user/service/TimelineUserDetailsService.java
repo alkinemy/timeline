@@ -1,6 +1,6 @@
 package com.lezhin.timeline.client.domain.user.service;
 
-import com.lezhin.timeline.client.domain.message.service.TimelineMemberAdapterService;
+import com.lezhin.timeline.client.domain.member.service.TimelineMemberAdapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

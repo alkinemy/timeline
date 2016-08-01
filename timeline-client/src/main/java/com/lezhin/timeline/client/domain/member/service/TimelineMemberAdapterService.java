@@ -1,7 +1,8 @@
-package com.lezhin.timeline.client.domain.message.service;
+package com.lezhin.timeline.client.domain.member.service;
 
-import com.lezhin.timeline.client.config.TimelineServerRestProperties;
+import com.lezhin.timeline.client.config.TimelineMemberRestProperties;
 import com.lezhin.timeline.client.domain.user.dto.TimelineUserDto;
+import com.lezhin.timeline.client.domain.user.dto.TimelineUserInsertForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,16 @@ public class TimelineMemberAdapterService {
 	private RetryTemplate timelineRetryTemplate;
 
 	@Autowired
-	private TimelineServerRestProperties timelineServerRestProperties;
+	private TimelineMemberRestProperties timelineMemberRestProperties;
 
 	public TimelineUserDto getUser(String loginId) {
-		String url = new StringBuilder().append(timelineServerRestProperties.getBaseUrl()).append("/{loginId}").toString();
+		String url = new StringBuilder().append(timelineMemberRestProperties.getBaseUrl()).append("/users/{loginId}").toString();
 		return timelineRetryTemplate.execute(context -> timelineRestTemplate.getForObject(url, TimelineUserDto.class, loginId));
+	}
+
+	public void registerUser(TimelineUserInsertForm insertForm) {
+		String url = new StringBuilder().append(timelineMemberRestProperties.getBaseUrl()).append("/users").toString();
+		timelineRetryTemplate.execute(context -> timelineRestTemplate.postForObject(url, insertForm, Void.class));
 	}
 
 	//		agentRetryTemplate.execute(context -> agentRestTemplate.postForEntity(agentProperties.getCallbackDeliverUrl(), response, Void.class));

@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.formLogin()
 					.loginPage("/login")
-					.usernameParameter("username")
+					.usernameParameter("loginId")
 					.passwordParameter("password")
 					.permitAll()
 			.and()
