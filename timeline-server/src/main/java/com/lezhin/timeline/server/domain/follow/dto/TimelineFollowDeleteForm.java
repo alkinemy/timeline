@@ -1,5 +1,6 @@
 package com.lezhin.timeline.server.domain.follow.dto;
 
+import com.lezhin.timeline.server.interfaces.api.user.dto.TimelineUserDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class TimelineFollowDeleteForm {
 
-	private String followerLoginId;
-	private String followingLoginId;
+	private TimelineUserDto follower;
+	private TimelineUserDto following;
 
 }

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/{loginId}")
 public class TimelineUserController {
 
 	@Autowired
@@ -21,15 +20,21 @@ public class TimelineUserController {
 	@Autowired
 	private TimelineMessageApiFacadeService timelineMessageApiFacadeService;
 
+	@RequestMapping(path = {"", "/newsfeed"}, method = RequestMethod.GET)
+	public String newsFeedPage(@AuthenticationPrincipal TimelineUser user, TimelineUserPageApiParam userPageParam, Model model) {
+		model.addAttribute("timelineMessages", timelineMessageApiFacadeService.getNewsFeed(user, userPageParam));
+		return "user/newsfeed";
+	}
+
 	@RequestMapping(path = "/{loginId}", method = RequestMethod.GET)
 	public String userPage(@AuthenticationPrincipal TimelineUser user,
 							@PathVariable("loginId") String targetUserLoginId,
 							TimelineUserPageApiParam userPageParam,
 							Model model) {
 
-		model.addAttribute("userName", timelineUserApiFacadeService.getUser(targetUserLoginId).getName());
+		model.addAttribute("user", timelineUserApiFacadeService.getUser(targetUserLoginId));
 		model.addAttribute("timelineMessages", timelineMessageApiFacadeService.getMessages(targetUserLoginId, userPageParam));
-		return "newsfeed/newsfeed";
+		return "user/user-home";
 	}
 
 }

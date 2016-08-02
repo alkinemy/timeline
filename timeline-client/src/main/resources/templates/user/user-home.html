@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h1>유저페이지: <span th:text="${user.name}">username</span>
+    <form th:action="@{/{loginId}/follow(loginId=${user.loginId})}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <input type="submit" value="FOLLOW" />
+    </form>
+    <form th:action="@{/{loginId}/unfollow(loginId=${user.loginId})}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <input type="submit" value="UNFOLLOW" />
+    </form>
+</h1>
+<div>
+    <div th:each="message : ${timelineMessages}">
+        <div th:replace="message/message">message</div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,8 +1,7 @@
 package com.lezhin.timeline.client.domain.user.service;
 
-import com.lezhin.timeline.client.domain.follow.dto.TimelineFollowInsertForm;
-import com.lezhin.timeline.client.domain.follow.service.TimelineFollowAdapterService;
 import com.lezhin.timeline.client.domain.user.dto.TimelineUserDto;
+import com.lezhin.timeline.client.domain.user.dto.TimelineUserFollowForm;
 import com.lezhin.timeline.client.domain.user.dto.TimelineUserInsertForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,15 +22,27 @@ public class TimelineUserFacadeService {
 		userInsertForm.setPassword(passwordEncoder.encode(userInsertForm.getPassword()));
 		timelineUserAdapterService.registerUser(userInsertForm);
 
-		TimelineFollowInsertForm followInsertForm = new TimelineFollowInsertForm();
 		TimelineUserDto userDto = TimelineUserDto.of(userInsertForm.getLoginId(), userInsertForm.getName());
-		followInsertForm.setFollower(userDto);
-		followInsertForm.setFollowing(userDto);
-		timelineFollowAdapterService.addFollowing(followInsertForm);
+		follow(userDto, userDto);
+	}
+
+	public void follow(TimelineUserDto follower, TimelineUserDto following) {
+		TimelineUserFollowForm followForm = new TimelineUserFollowForm();
+		followForm.setFollower(follower);
+		followForm.setFollowing(following);
+		timelineFollowAdapterService.addFollowing(followForm);
 	}
 
 	public TimelineUserDto getUser(String targetUserLoginId) {
-		return timelineUserAdapterService.getUser(targetUserLoginId);
+		TimelineUserDto user = timelineUserAdapterService.getUser(targetUserLoginId);
+		//TODO 임시처리..
+		return TimelineUserDto.of(user.getLoginId(), user.getName());
 	}
 
+	public void unfollow(TimelineUserDto follower, TimelineUserDto following) {
+		TimelineUserFollowForm followForm = new TimelineUserFollowForm();
+		followForm.setFollower(follower);
+		followForm.setFollowing(following);
+		timelineFollowAdapterService.removeFollowing(followForm);
+	}
 }

@@ -24,12 +24,12 @@ public class TimelineFollowController {
 		return timelineFollowApiFacadeService.getFollowings(user);
 	}
 
-	@RequestMapping(path = "", method = RequestMethod.POST)
+	@RequestMapping(path = "/follow", method = RequestMethod.POST)
 	public void following(@RequestBody FollowingApiInsertForm insertApiForm) {
 		timelineFollowApiFacadeService.addFollowing(insertApiForm);
 	}
 
-	@RequestMapping(path = "", method = RequestMethod.DELETE)
+	@RequestMapping(path = "/unfollow", method = RequestMethod.POST)
 	public void unfollow(@RequestBody UnfollowApiForm unfollowApiForm) {
 		timelineFollowApiFacadeService.unfollowing(unfollowApiForm);
 	}

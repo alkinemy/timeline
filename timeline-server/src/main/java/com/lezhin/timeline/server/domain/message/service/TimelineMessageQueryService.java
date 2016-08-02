@@ -1,9 +1,11 @@
 package com.lezhin.timeline.server.domain.message.service;
 
-import com.lezhin.timeline.server.domain.message.dto.TimelineMessageNewsFeedCondition;
+import com.lezhin.timeline.server.domain.message.dto.NewsFeedConditions;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
 import com.lezhin.timeline.server.domain.message.repository.TimelineMessageRepository;
+import com.mysema.query.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,16 +17,16 @@ public class TimelineMessageQueryService {
 	@Autowired
 	private TimelineMessageRepository timelineMessageRepository;
 
-	public List<TimelineMessageEntity> findAll(String loginId) {
-		return timelineMessageRepository.findAllByAuthorLoginId(loginId);
-	}
-
 	public Optional<TimelineMessageEntity>findOne(String messageId) {
 		return timelineMessageRepository.findOneByMessageId(messageId);
 	}
 
-	public List<TimelineMessageEntity> findFollowingTimelineMessages(TimelineMessageNewsFeedCondition condition) {
+	public List<TimelineMessageEntity> findFollowingMessages(NewsFeedConditions condition) {
 		return timelineMessageRepository.findAllFollowingTimelineMessages(condition.getLoginId(), condition.getLastTimelineMessageId(), condition.getSize());
+	}
+
+	public List<TimelineMessageEntity> findAll(Predicate predicate, Pageable pageable) {
+		return timelineMessageRepository.findAll(predicate, pageable).getContent();
 	}
 
 }

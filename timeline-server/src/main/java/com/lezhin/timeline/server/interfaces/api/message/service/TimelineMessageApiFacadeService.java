@@ -2,11 +2,12 @@ package com.lezhin.timeline.server.interfaces.api.message.service;
 
 import com.lezhin.timeline.server.domain.base.assembler.SmartAssembler;
 import com.lezhin.timeline.server.domain.message.dto.TimelineMessageInsertForm;
+import com.lezhin.timeline.server.domain.message.dto.TimelineUserMessageSearchConditions;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
 import com.lezhin.timeline.server.domain.message.service.TimelineMessageFacadeService;
 import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineMessageDto;
 import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineMessageInsertApiForm;
-import com.lezhin.timeline.server.interfaces.api.user.dto.TimelineUserDto;
+import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineUserMessageApiConditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +27,16 @@ public class TimelineMessageApiFacadeService {
 		timelineMessageFacadeService.insert(insertForm);
 	}
 
-	public List<TimelineMessageDto> listMessages(TimelineUserDto user) {
-		List<TimelineMessageEntity> timelineMessages = timelineMessageFacadeService.getTimelineMessages(user.getLoginId());
+	public List<TimelineMessageDto> listMessages(TimelineUserMessageApiConditions userMessageApiParam) {
+		TimelineUserMessageSearchConditions userMessageParam = assembler.assemble(userMessageApiParam, TimelineUserMessageSearchConditions.class);
+		List<TimelineMessageEntity> timelineMessages = timelineMessageFacadeService.getTimelineUserMessages(userMessageParam);
 		return assembler.assemble(timelineMessages, TimelineMessageDto.class);
 	}
+
+	public List<TimelineMessageDto> getNewsFeed(TimelineUserMessageApiConditions userMessageApiParam) {
+		TimelineUserMessageSearchConditions userMessageParam = assembler.assemble(userMessageApiParam, TimelineUserMessageSearchConditions.class);
+		List<TimelineMessageEntity> timelineMessages = timelineMessageFacadeService.getNewsFeed(userMessageParam);
+		return assembler.assemble(timelineMessages, TimelineMessageDto.class);
+	}
+
 }

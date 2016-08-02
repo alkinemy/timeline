@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TimelineMessageNewsFeedCondition {
+public class NewsFeedConditions {
 
 	private String loginId;
 	private Long lastTimelineMessageId;

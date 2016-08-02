@@ -5,10 +5,15 @@ import com.lezhin.timeline.common.domain.base.exception.Exceptions;
 import com.lezhin.timeline.server.domain.activity.service.ActivityEventProducer;
 import com.lezhin.timeline.server.domain.base.exception.TimelineErrorCode;
 import com.lezhin.timeline.server.domain.message.dto.TimelineMessageInsertForm;
-import com.lezhin.timeline.server.domain.message.dto.TimelineMessageNewsFeedCondition;
+import com.lezhin.timeline.server.domain.message.dto.NewsFeedConditions;
+import com.lezhin.timeline.server.domain.message.dto.TimelineUserMessageSearchConditions;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
+import com.lezhin.timeline.server.domain.message.model.TimelineUserMessageSearchContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,17 +50,20 @@ public class TimelineMessageFacadeService {
 		return message;
 	}
 
-	public List<TimelineMessageEntity> getTimelineMessages(String loginId) {
-		return timelineMessageQueryService.findAll(loginId);
-	}
-
 	public TimelineMessageEntity getTimelineMessage(String messageId) {
 		return timelineMessageQueryService.findOne(messageId)
 			.orElseThrow(() -> Exceptions.newException(TimelineErrorCode.ENTITY_NOT_FOUND, messageId));
 	}
 
-	public List<TimelineMessageEntity> getFollowingTimelineMessages(TimelineMessageNewsFeedCondition condition) {
-		return timelineMessageQueryService.findFollowingTimelineMessages(condition);
+	public List<TimelineMessageEntity> getTimelineUserMessages(TimelineUserMessageSearchConditions userMessageParam) {
+		TimelineUserMessageSearchContext context = TimelineUserMessageSearchContext.of(this);
+		Pageable pageable = new PageRequest(0, userMessageParam.getSize(), Sort.Direction.DESC, "id");
+		return timelineMessageQueryService.findAll(userMessageParam.toPredicate(context), pageable);
+	}
+
+	public List<TimelineMessageEntity> getNewsFeed(TimelineUserMessageSearchConditions userMessageParam) {
+		NewsFeedConditions condition = assembler.assemble(userMessageParam, NewsFeedConditions.class);
+		return timelineMessageQueryService.findFollowingMessages(condition);
 	}
 
 }

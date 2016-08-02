@@ -35,4 +35,10 @@ public class TimelineMessageApiFacadeService {
 		return timelineMessageFacadeService.getMessages(userMessageParam);
 	}
 
+	public List<TimelineMessageDto> getNewsFeed(TimelineUser user, TimelineUserPageApiParam userPageParam) {
+		TimelineUserMessageParam userMessageParam = assembler.assemble(userPageParam, TimelineUserMessageParam.class);
+		userMessageParam.setLoginId(user.getLoginId());
+		return timelineMessageFacadeService.getNewsFeed(userMessageParam);
+	}
+
 }
