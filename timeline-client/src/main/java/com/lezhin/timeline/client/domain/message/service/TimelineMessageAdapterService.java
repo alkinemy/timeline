@@ -4,6 +4,7 @@ import com.lezhin.timeline.client.config.TimelineServerRestProperties;
 import com.lezhin.timeline.client.domain.message.dto.TimelineMessageDto;
 import com.lezhin.timeline.client.domain.message.dto.TimelineMessagePostForm;
 import com.lezhin.timeline.client.domain.message.dto.TimelineNewsFeedParam;
+import com.lezhin.timeline.client.domain.message.dto.TimelineUserMessageParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -56,4 +57,29 @@ public class TimelineMessageAdapterService {
 		}
 		return url.toString();
 	}
+
+	public List<TimelineMessageDto> getMessages(TimelineUserMessageParam userMessageParam) {
+		String url = buildUserMessageUrl(userMessageParam);
+		Map<String, Object> params = new HashMap<>();
+		params.put("loginId", userMessageParam.getLoginId());
+		params.put("size", userMessageParam.getSize());
+		params.put("lastTimelineMessageId", userMessageParam.getLastTimelineMessageId());
+
+		ParameterizedTypeReference<List<TimelineMessageDto>> typeReference = new ParameterizedTypeReference<List<TimelineMessageDto>>() { };
+		return timelineRetryTemplate.execute(context -> timelineRestTemplate.exchange(url, HttpMethod.GET, null, typeReference, params).getBody());
+	}
+
+	private String buildUserMessageUrl(TimelineUserMessageParam userMessageParam) {
+		StringBuilder url = new StringBuilder()
+			.append(timelineServerRestProperties.getBaseUrl()).append("/messages")
+			.append("?loginId={loginId}");
+		if (userMessageParam.getSize() != null) {
+			url.append("?size={size}");
+		}
+		if (StringUtils.isNotBlank(userMessageParam.getLastTimelineMessageId())) {
+			url.append("?lastTimelineMessageId={lastTimelineMessageId}");
+		}
+		return url.toString();
+	}
+
 }

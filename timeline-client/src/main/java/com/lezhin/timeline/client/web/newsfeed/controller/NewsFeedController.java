@@ -20,7 +20,6 @@ public class NewsFeedController {
 
 	@RequestMapping(path = {"", "/newsfeed"}, method = RequestMethod.GET)
 	public String newsFeed(@AuthenticationPrincipal TimelineUser user, NewsFeedApiParam param, Model model) {
-		log.debug("user(ID: {})", user.getUsername());
 		model.addAttribute("userName", user.getName());
 		model.addAttribute("timelineMessages", newsFeedApiFacadeService.getNewsFeed(user, param));
 		return "newsfeed/newsfeed";

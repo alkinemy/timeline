@@ -30,4 +30,8 @@ public class TimelineUserFacadeService {
 		timelineFollowAdapterService.addFollowing(followInsertForm);
 	}
 
+	public TimelineUserDto getUser(String targetUserLoginId) {
+		return timelineUserAdapterService.getUser(targetUserLoginId);
+	}
+
 }

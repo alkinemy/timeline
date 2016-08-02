@@ -22,7 +22,7 @@ public class NewsFeedApiFacadeService {
 
 	public List<TimelineMessageDto> getNewsFeed(TimelineUser user, NewsFeedApiParam param) {
 		TimelineNewsFeedParam newsFeedParam = assembler.assemble(param, TimelineNewsFeedParam.class);
-		newsFeedParam.setLoginId(user.getUsername());
+		newsFeedParam.setLoginId(user.getLoginId());
 		return timelineMessageFacadeService.getNewsFeed(newsFeedParam);
 	}
 
