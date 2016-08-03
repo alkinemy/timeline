@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <body>
+        <div th:replace="partial/user/user-move"></div>
         <h1><span th:text="${message.author.name}">username</span>가 작성한 메시지: <span th:text="${message.messageId}">message id</span>
         </h1>
         <div>

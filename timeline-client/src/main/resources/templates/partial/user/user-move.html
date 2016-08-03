@@ -1,0 +1,12 @@
+<div>
+    <form id="user-move-form" action="" method="get">
+        <input type="text"/>
+        <input type="submit" VALUE="MOVE"/>
+    </form>
+
+    <script type="text/javascript">
+        $("#user-move-form").submit(function(event) {
+            $(this).attr("action", "/" + $(this).find("input").val());
+        });
+    </script>
+</div>
