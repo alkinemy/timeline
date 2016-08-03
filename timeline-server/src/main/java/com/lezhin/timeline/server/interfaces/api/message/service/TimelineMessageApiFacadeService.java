@@ -3,6 +3,7 @@ package com.lezhin.timeline.server.interfaces.api.message.service;
 import com.lezhin.timeline.server.domain.base.assembler.SmartAssembler;
 import com.lezhin.timeline.server.domain.message.dto.TimelineMessageInsertForm;
 import com.lezhin.timeline.server.domain.message.dto.TimelineUserMessageSearchConditions;
+import com.lezhin.timeline.server.domain.message.dto.TimelineUserMessagesSearchConditions;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
 import com.lezhin.timeline.server.domain.message.service.TimelineMessageFacadeService;
 import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineMessageDto;
@@ -28,15 +29,21 @@ public class TimelineMessageApiFacadeService {
 	}
 
 	public List<TimelineMessageDto> listMessages(TimelineUserMessageApiConditions userMessageApiParam) {
-		TimelineUserMessageSearchConditions userMessageParam = assembler.assemble(userMessageApiParam, TimelineUserMessageSearchConditions.class);
+		TimelineUserMessagesSearchConditions userMessageParam = assembler.assemble(userMessageApiParam, TimelineUserMessagesSearchConditions.class);
 		List<TimelineMessageEntity> timelineMessages = timelineMessageFacadeService.getTimelineUserMessages(userMessageParam);
 		return assembler.assemble(timelineMessages, TimelineMessageDto.class);
 	}
 
 	public List<TimelineMessageDto> getNewsFeed(TimelineUserMessageApiConditions userMessageApiParam) {
-		TimelineUserMessageSearchConditions userMessageParam = assembler.assemble(userMessageApiParam, TimelineUserMessageSearchConditions.class);
+		TimelineUserMessagesSearchConditions userMessageParam = assembler.assemble(userMessageApiParam, TimelineUserMessagesSearchConditions.class);
 		List<TimelineMessageEntity> timelineMessages = timelineMessageFacadeService.getNewsFeed(userMessageParam);
 		return assembler.assemble(timelineMessages, TimelineMessageDto.class);
+	}
+
+	public TimelineMessageDto getMessage(String loginId, String messageId) {
+		TimelineUserMessageSearchConditions conditions = TimelineUserMessageSearchConditions.of(loginId, messageId);
+		TimelineMessageEntity timelineMessage = timelineMessageFacadeService.getTimelineMessage(conditions);
+		return assembler.assemble(timelineMessage, TimelineMessageDto.class);
 	}
 
 }

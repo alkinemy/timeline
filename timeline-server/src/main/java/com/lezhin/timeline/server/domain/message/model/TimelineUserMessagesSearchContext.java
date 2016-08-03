@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
-public class TimelineUserMessageSearchContext {
+public class TimelineUserMessagesSearchContext {
 
 	private TimelineMessageFacadeService timelineMessageFacadeService;
 

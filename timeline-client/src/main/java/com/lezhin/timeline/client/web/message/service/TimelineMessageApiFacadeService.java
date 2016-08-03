@@ -4,6 +4,7 @@ import com.google.common.collect.Iterables;
 import com.lezhin.timeline.client.domain.message.dto.TimelineMessageDto;
 import com.lezhin.timeline.client.domain.message.dto.TimelineMessagePostForm;
 import com.lezhin.timeline.client.domain.message.dto.TimelineUserMessageParam;
+import com.lezhin.timeline.client.domain.message.dto.TimelineUserMessagesParam;
 import com.lezhin.timeline.client.domain.message.service.TimelineMessageFacadeService;
 import com.lezhin.timeline.client.domain.user.dto.TimelineUserDto;
 import com.lezhin.timeline.client.domain.user.model.TimelineUser;
@@ -41,17 +42,22 @@ public class TimelineMessageApiFacadeService {
 	}
 
 	private TimelineMessageDtos getMessages(
-		String loginId, TimelineUserPageApiParam userPageParam, Function<TimelineUserMessageParam, List<TimelineMessageDto>> messageSearchFunction) {
+		String loginId, TimelineUserPageApiParam userPageParam, Function<TimelineUserMessagesParam, List<TimelineMessageDto>> messageSearchFunction) {
 
-		TimelineUserMessageParam userMessageParam = assembler.assemble(userPageParam, TimelineUserMessageParam.class);
-		userMessageParam.setLoginId(loginId);
-		List<TimelineMessageDto> messages = messageSearchFunction.apply(userMessageParam);
+		TimelineUserMessagesParam userMessagesParam = assembler.assemble(userPageParam, TimelineUserMessagesParam.class);
+		userMessagesParam.setLoginId(loginId);
+		List<TimelineMessageDto> messages = messageSearchFunction.apply(userMessagesParam);
 		TimelineMessageDtos timelineMessageDtos = new TimelineMessageDtos();
 		timelineMessageDtos.setMessages(messages);
 		if (!messages.isEmpty()) {
 			timelineMessageDtos.setLastTimelineMessageId(Iterables.getLast(messages).getMessageId());
 		}
 		return timelineMessageDtos;
+	}
+
+	public TimelineMessageDto getMessage(String loginId, String messageId) {
+		TimelineUserMessageParam userMessageParam = TimelineUserMessageParam.of(loginId, messageId);
+		return timelineMessageFacadeService.getMessage(userMessageParam);
 	}
 
 }

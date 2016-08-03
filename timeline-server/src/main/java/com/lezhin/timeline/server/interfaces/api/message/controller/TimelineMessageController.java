@@ -26,6 +26,11 @@ public class TimelineMessageController {
 		return timelineMessageApiFacadeService.listMessages(userMessageConditions);
 	}
 
+	@RequestMapping(path = "/{loginId}/messages/{messageId}", method = RequestMethod.GET)
+	public TimelineMessageDto get(@PathVariable("loginId") String loginId, @PathVariable("messageId") String messageId) {
+		return timelineMessageApiFacadeService.getMessage(loginId, messageId);
+	}
+
 	@RequestMapping(path = "/newsfeed", method = RequestMethod.GET)
 	public List<TimelineMessageDto> getNewsFeed(TimelineUserMessageApiConditions userMessageConditions) {
 		return timelineMessageApiFacadeService.getNewsFeed(userMessageConditions);

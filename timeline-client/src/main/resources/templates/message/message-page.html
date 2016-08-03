@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <h1><span th:text="${message.author.name}">username</span>가 작성한 메시지: <span th:text="${message.messageId}">message id</span>
+        </h1>
+        <div>
+            <h2>
+                내용: <span th:text="${message.contents}">contents!</span>
+                <br/>작성 시간: <span th:text="${message.createdDate}">시간</span>
+            </h2>
+        </div>
+    </body>
+</html>

@@ -4,6 +4,7 @@ import com.lezhin.timeline.client.config.TimelineServerRestProperties;
 import com.lezhin.timeline.client.domain.message.dto.TimelineMessageDto;
 import com.lezhin.timeline.client.domain.message.dto.TimelineMessagePostForm;
 import com.lezhin.timeline.client.domain.message.dto.TimelineUserMessageParam;
+import com.lezhin.timeline.client.domain.message.dto.TimelineUserMessagesParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -32,21 +33,21 @@ public class TimelineMessageAdapterService {
 		timelineRetryTemplate.execute(context -> timelineRestTemplate.postForObject(url, postForm, Void.class));
 	}
 
-	public List<TimelineMessageDto> getNewsFeed(TimelineUserMessageParam userMessageParam) {
+	public List<TimelineMessageDto> getNewsFeed(TimelineUserMessagesParam userMessageParam) {
 		String url = new StringBuilder().append(timelineServerRestProperties.getBaseUrl()).append("/newsfeed")
 			.append(buildUserMessageQueryString(userMessageParam))
 			.toString();
 		return getMessages(url, userMessageParam);
 	}
 
-	public List<TimelineMessageDto> getMessages(TimelineUserMessageParam userMessageParam) {
+	public List<TimelineMessageDto> getMessages(TimelineUserMessagesParam userMessageParam) {
 		String url = new StringBuilder().append(timelineServerRestProperties.getBaseUrl()).append("/messages")
 			.append(buildUserMessageQueryString(userMessageParam))
 			.toString();
 		return getMessages(url, userMessageParam);
 	}
 
-	private String buildUserMessageQueryString(TimelineUserMessageParam userMessageParam) {
+	private String buildUserMessageQueryString(TimelineUserMessagesParam userMessageParam) {
 		StringBuilder queryString = new StringBuilder();
 		queryString.append("?loginId={loginId}");
 		if (userMessageParam.getSize() != null) {
@@ -58,7 +59,7 @@ public class TimelineMessageAdapterService {
 		return queryString.toString();
 	}
 
-	private List<TimelineMessageDto> getMessages(String url, TimelineUserMessageParam userMessageParam) {
+	private List<TimelineMessageDto> getMessages(String url, TimelineUserMessagesParam userMessageParam) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("loginId", userMessageParam.getLoginId());
 		params.put("size", userMessageParam.getSize());
@@ -68,4 +69,12 @@ public class TimelineMessageAdapterService {
 		return timelineRetryTemplate.execute(context -> timelineRestTemplate.exchange(url, HttpMethod.GET, null, typeReference, params).getBody());
 	}
 
+	public TimelineMessageDto getMessage(TimelineUserMessageParam userMessageParam) {
+		String url = new StringBuilder().append(timelineServerRestProperties.getBaseUrl()).append("/{loginId}/messages/{messageId}")
+			.toString();
+		Map<String, Object> params = new HashMap<>();
+		params.put("loginId", userMessageParam.getLoginId());
+		params.put("messageId", userMessageParam.getMessageId());
+		return timelineRetryTemplate.execute(context -> timelineRestTemplate.getForObject(url, TimelineMessageDto.class, params));
+	}
 }

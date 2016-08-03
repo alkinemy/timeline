@@ -17,8 +17,12 @@ public class TimelineMessageQueryService {
 	@Autowired
 	private TimelineMessageRepository timelineMessageRepository;
 
-	public Optional<TimelineMessageEntity>findOne(String messageId) {
+	public Optional<TimelineMessageEntity> findOne(String messageId) {
 		return timelineMessageRepository.findOneByMessageId(messageId);
+	}
+
+	public Optional<TimelineMessageEntity> findOne(Predicate predicate) {
+		return Optional.ofNullable(timelineMessageRepository.findOne(predicate));
 	}
 
 	public List<TimelineMessageEntity> findFollowingMessages(NewsFeedConditions condition) {
