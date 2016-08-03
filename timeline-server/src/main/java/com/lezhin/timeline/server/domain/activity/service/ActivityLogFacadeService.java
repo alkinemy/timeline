@@ -47,7 +47,7 @@ public class ActivityLogFacadeService {
 		TimelineMessageEntity message = timelineMessageFacadeService.getTimelineMessage(messageId);
 		//TODO base url을 넣자
 		TimelineUser from = message.getAuthor();
-		String url = new StringBuilder().append("/").append(messageId).toString();
+		String url = new StringBuilder().append("/messages/").append(messageId).toString();
 
 		timelineFollowFacadeService.getFollowings(from.getLoginId())
 			.forEach(followingUser -> {

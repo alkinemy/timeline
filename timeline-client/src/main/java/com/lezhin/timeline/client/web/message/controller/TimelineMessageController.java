@@ -19,7 +19,7 @@ public class TimelineMessageController {
 	@RequestMapping(path = "", method = RequestMethod.POST)
 	public String postMessage(@AuthenticationPrincipal TimelineUser user, TimelineMessagePostApiForm postForm) {
 		timelineMessageApiFacadeService.postMessage(user, postForm);
-		return "redirect:/newsfeed";
+		return "redirect:/";
 	}
 
 }

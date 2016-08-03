@@ -6,22 +6,113 @@
 
     <body>
         <h1>뉴스피드: <span sec:authentication="name">username</span></h1>
+        <div id="timeline-message-input">
+            <div th:replace="partial/message/message-input">message input</div>
+        </div>
+
+        <h2>메시지</h2>
         <div id="timeline-messages">
-            <div th:replace="message/message-input">message input</div>
             <div th:each="message : ${timelineMessages.messages}">
-                <div th:replace="message/message">message!</div>
+                <div th:replace="partial/message/message">message!</div>
             </div>
         </div>
-        <div th:if="${timelineMessages.messages}" id="load-timeline-message">
+        <div th:if="${timelineMessages.messages}" id="load-timeline-messages">
             <form id="load-timeline-messages-form" th:action="@{/newsfeed/load}" method="get">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 <input type="hidden" th:name="lastTimelineMessageId" th:value="${timelineMessages.lastTimelineMessageId}"/>
                 <input type="submit" value="LOAD MORE"/>
             </form>
         </div>
+
+        <h2>활동</h2>
+        <div id="activity-logs">
+            <div th:each="activityLog : ${activityLogs.content}">
+                <div th:replace="partial/user/activity-log">activity log!</div>
+            </div>
+        </div>
+        <div>
+            전체 페이지(
+            <span id="activity-logs-page-number" th:text="${activityLogs.metadata.number}">number</span>
+            /
+            <span id="activity-logs-total-pages" th:text="${activityLogs.metadata.totalPages} - 1">totalPages</span>)
+        </div>
+        <div th:if="${activityLogs}" id="load-activity-logs">
+            <form id="previous-activity-logs-form" th:action="@{/activities/load}" method="get">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="hidden" th:name="page" th:value="0"/>
+                <input type="submit" value="PREVIOUS" disabled="disabled"/>
+            </form>
+            <form id="next-activity-logs-form" th:action="@{/activities/load}" method="get">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="hidden" th:name="page" th:value="1"/>
+                <input type="submit" value="NEXT" th:disabled="${activityLogs.metadata.totalPages - 1} == ${activityLogs.metadata.number}"/>
+            </form>
+        </div>
     </body>
 
     <script type="text/javascript">
+        $("#next-activity-logs-form").submit(function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: $("#next-activity-logs-form").attr("action"),
+                method: $("#next-activity-logs-form").attr("method"),
+                data: {
+                    page: $("#next-activity-logs-form > input[name=page]").val()
+                }
+            }).done(function(activityLogs) {
+                $("#activity-logs").empty();
+                $.each(activityLogs.content, function(index, value) {
+                    $("#activity-logs").append("<p>" + value.message + "<br/>시간: " + value.createdDate + "</p>");
+                });
+                if ((activityLogs.page.totalPages - 1) === activityLogs.page.number) {
+                    $("#next-activity-logs-form > input[name=page]").val(activityLogs.page.number);
+                    $("#next-activity-logs-form > input[type=submit]").prop("disabled", true);
+                } else {
+                    $("#next-activity-logs-form > input[name=page]").val(activityLogs.page.number + 1);
+                    $("#next-activity-logs-form > input[type=submit]").prop("disabled", false);
+                }
+
+                $("#previous-activity-logs-form > input[name=page]").val(activityLogs.page.number - 1);
+                $("#previous-activity-logs-form > input[type=submit]").prop("disabled", false);
+
+                $("#activity-logs-page-number").text(activityLogs.page.number);
+                $("#activity-logs-total-pages").text(activityLogs.page.totalPages - 1);
+            }).fail(function() {
+                alert("Fail to load activity logs");
+            });
+        });
+
+        $("#previous-activity-logs-form").submit(function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: $("#previous-activity-logs-form").attr("action"),
+                method: $("#previous-activity-logs-form").attr("method"),
+                data: {
+                    page: $("#previous-activity-logs-form > input[name=page]").val()
+                }
+            }).done(function(activityLogs) {
+                $("#activity-logs").empty();
+                $.each(activityLogs.content, function(index, value) {
+                    $("#activity-logs").append("<p>" + value.message + "<br/>시간: " + value.createdDate + "</p>");
+                });
+                if (activityLogs.page.number === 0) {
+                    $("#previous-activity-logs-form > input[name=page]").val(activityLogs.page.number);
+                    $("#previous-activity-logs-form > input[type=submit]").prop("disabled", true);
+                } else {
+                    $("#previous-activity-logs-form > input[name=page]").val(activityLogs.page.number - 1);
+                    $("#previous-activity-logs-form > input[type=submit]").prop("disabled", false);
+                }
+
+                $("#next-activity-logs-form > input[name=page]").val(activityLogs.page.number + 1);
+                $("#next-activity-logs-form > input[type=submit]").prop("disabled", false);
+
+                $("#activity-logs-page-number").text(activityLogs.page.number);
+                $("#activity-logs-total-pages").text(activityLogs.page.totalPages - 1);
+            }).fail(function() {
+                alert("Fail to load activity logs");
+            });
+        });
+
         $("#load-timeline-messages-form").submit(function(event) {
             event.preventDefault();
             $.ajax({

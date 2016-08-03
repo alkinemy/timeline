@@ -1,0 +1,5 @@
+<p>
+    <span th:text="${activityLog.message}">message</span><br/>
+    시간: <span th:text="${activityLog.createdDate}">생성일자</span>
+    <a th:href="@{/{linkUrl}(linkUrl=${activityLog.linkUrl})}"><button type="button">상세</button></a>
+</p>
