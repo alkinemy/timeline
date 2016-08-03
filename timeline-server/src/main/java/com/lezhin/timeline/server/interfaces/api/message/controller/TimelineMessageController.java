@@ -22,13 +22,13 @@ public class TimelineMessageController {
 	}
 
 	@RequestMapping(path = "/messages", method = RequestMethod.GET)
-	public List<TimelineMessageDto> list(TimelineUserMessageApiConditions userMessageParam) {
-		return timelineMessageApiFacadeService.listMessages(userMessageParam);
+	public List<TimelineMessageDto> list(TimelineUserMessageApiConditions userMessageConditions) {
+		return timelineMessageApiFacadeService.listMessages(userMessageConditions);
 	}
 
 	@RequestMapping(path = "/newsfeed", method = RequestMethod.GET)
-	public List<TimelineMessageDto> getNewsFeed(TimelineUserMessageApiConditions userMessageParam) {
-		return timelineMessageApiFacadeService.getNewsFeed(userMessageParam);
+	public List<TimelineMessageDto> getNewsFeed(TimelineUserMessageApiConditions userMessageConditions) {
+		return timelineMessageApiFacadeService.getNewsFeed(userMessageConditions);
 	}
 
 }

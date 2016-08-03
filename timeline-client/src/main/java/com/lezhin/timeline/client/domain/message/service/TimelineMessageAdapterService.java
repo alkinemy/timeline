@@ -50,10 +50,10 @@ public class TimelineMessageAdapterService {
 		StringBuilder queryString = new StringBuilder();
 		queryString.append("?loginId={loginId}");
 		if (userMessageParam.getSize() != null) {
-			queryString.append("?size={size}");
+			queryString.append("&size={size}");
 		}
 		if (StringUtils.isNotBlank(userMessageParam.getLastTimelineMessageId())) {
-			queryString.append("?lastTimelineMessageId={lastTimelineMessageId}");
+			queryString.append("&lastTimelineMessageId={lastTimelineMessageId}");
 		}
 		return queryString.toString();
 	}

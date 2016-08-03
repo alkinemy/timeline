@@ -1,6 +1,7 @@
 package com.lezhin.timeline.client.web.user.controller;
 
 import com.lezhin.timeline.client.domain.user.model.TimelineUser;
+import com.lezhin.timeline.client.web.message.dto.TimelineMessageDtos;
 import com.lezhin.timeline.client.web.message.service.TimelineMessageApiFacadeService;
 import com.lezhin.timeline.client.web.user.dto.TimelineUserPageApiParam;
 import com.lezhin.timeline.client.web.user.service.TimelineUserApiFacadeService;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class TimelineUserController {
@@ -26,6 +28,12 @@ public class TimelineUserController {
 		return "user/newsfeed";
 	}
 
+	@RequestMapping(path = "/newsfeed/load", method = RequestMethod.GET)
+	@ResponseBody
+	public TimelineMessageDtos loadNewsFeed(@AuthenticationPrincipal TimelineUser user, TimelineUserPageApiParam userPageParam) {
+		return timelineMessageApiFacadeService.getNewsFeed(user, userPageParam);
+	}
+
 	@RequestMapping(path = "/{loginId}", method = RequestMethod.GET)
 	public String userPage(@AuthenticationPrincipal TimelineUser user,
 							@PathVariable("loginId") String targetUserLoginId,
@@ -35,6 +43,12 @@ public class TimelineUserController {
 		model.addAttribute("user", timelineUserApiFacadeService.getUser(targetUserLoginId));
 		model.addAttribute("timelineMessages", timelineMessageApiFacadeService.getMessages(targetUserLoginId, userPageParam));
 		return "user/user-home";
+	}
+
+	@RequestMapping(path = "/{loginId}/messages/load", method = RequestMethod.GET)
+	@ResponseBody
+	public TimelineMessageDtos loadUserMessages(@PathVariable("loginId") String targetUserLoginId, TimelineUserPageApiParam userPageParam) {
+		return timelineMessageApiFacadeService.getMessages(targetUserLoginId, userPageParam);
 	}
 
 }

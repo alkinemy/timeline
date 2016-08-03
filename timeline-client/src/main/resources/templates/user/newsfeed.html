@@ -1,12 +1,48 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<body>
-<h1>뉴스피드: <span sec:authentication="name">username</span></h1>
-<div>
-    <div th:replace="message/message-input">message input</div>
-    <div th:each="message : ${timelineMessages}">
-        <div th:replace="message/message">message!</div>
-    </div>
-</div>
-</body>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    </head>
+
+    <body>
+        <h1>뉴스피드: <span sec:authentication="name">username</span></h1>
+        <div id="timeline-messages">
+            <div th:replace="message/message-input">message input</div>
+            <div th:each="message : ${timelineMessages.messages}">
+                <div th:replace="message/message">message!</div>
+            </div>
+        </div>
+        <div th:if="${timelineMessages.messages}" id="load-timeline-message">
+            <form id="load-timeline-messages-form" th:action="@{/newsfeed/load}" method="get">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="hidden" th:name="lastTimelineMessageId" th:value="${timelineMessages.lastTimelineMessageId}"/>
+                <input type="submit" value="LOAD MORE"/>
+            </form>
+        </div>
+    </body>
+
+    <script type="text/javascript">
+        $("#load-timeline-messages-form").submit(function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: $("#load-timeline-messages-form").attr("action"),
+                method: $("#load-timeline-messages-form").attr("method"),
+                data: {
+                    lastTimelineMessageId: $("#load-timeline-messages-form > [name=lastTimelineMessageId]").val()
+                }
+            }).done(function(timelineMessages) {
+                $.each(timelineMessages.messages, function(index, value) {
+                    $("#timeline-messages").append("<p>이름: " + value.author.name + "<br/>내용: " + value.contents + "<br/>" + value.createdDate + "</p>");
+                });
+                if (timelineMessages.lastTimelineMessageId === null) {
+                    $("#load-timeline-message").remove();
+                } else {
+                    $("#load-timeline-messages-form > [name=lastTimelineMessageId]").val(timelineMessages.lastTimelineMessageId);
+                }
+            }).fail(function() {
+                alert("Fail to load messages");
+            });
+        });
+    </script>
+
 </html>
