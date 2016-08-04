@@ -6,7 +6,7 @@
 
     <body>
         <div th:replace="partial/user/user-move"></div>
-        <h1>뉴스피드: <span sec:authentication="name">username</span></h1>
+        <h1>뉴스피드: <span sec:authentication="name">username</span><a th:href="@{'/' + ${#authentication.name}}"><button type="button">마이페이지</button></a></h1>
         <div id="timeline-message-input">
             <div th:replace="partial/message/message-input">message input</div>
         </div>
