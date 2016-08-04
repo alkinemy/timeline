@@ -31,7 +31,17 @@ public class TimelineFollowFacadeService {
 	@Transactional(readOnly = true)
 	public List<TimelineUser> getFollowings(String loginId) {
 		List<TimelineFollowEntity> follows = timelineFollowQueryService.findAllByFollowerLoginId(loginId);
-		return follows.stream().map(TimelineFollowEntity::getFollowing).collect(Collectors.toList());
+		return follows.stream()
+			.filter(follow -> !follow.getFollowing().getLoginId().equals(loginId))
+			.map(TimelineFollowEntity::getFollowing).collect(Collectors.toList());
+	}
+
+	@Transactional(readOnly = true)
+	public List<TimelineUser> getFollowers(String loginId) {
+		List<TimelineFollowEntity> follows = timelineFollowQueryService.findAllByFollowingLoginId(loginId);
+		return follows.stream()
+			.filter(follow -> !follow.getFollower().getLoginId().equals(loginId))
+			.map(TimelineFollowEntity::getFollower).collect(Collectors.toList());
 	}
 
 	@Transactional

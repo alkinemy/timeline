@@ -12,6 +12,8 @@ public interface TimelineFollowRepository extends TimelineJpaRepository<Timeline
 
 	List<TimelineFollowEntity> findAllByFollowerLoginId(String loginId);
 
-	Optional<TimelineFollowEntity> findOneByFollowerLoginIdAndFollowingLoginId(String loginId, String followingLoginId);
+	List<TimelineFollowEntity> findAllByFollowingLoginId(String loginId);
+
+	Optional<TimelineFollowEntity> findOneByFollowerLoginIdAndFollowingLoginId(String followerLoginId, String followingLoginId);
 
 }

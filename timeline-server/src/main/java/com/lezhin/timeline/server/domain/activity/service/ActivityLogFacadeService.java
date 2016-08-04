@@ -47,7 +47,7 @@ public class ActivityLogFacadeService {
 	public void logTimelineMessageCreatedEvent(String messageId) {
 		TimelineMessageEntity message = timelineMessageFacadeService.getTimelineMessage(messageId);
 		TimelineUser from = message.getAuthor();
-		timelineFollowFacadeService.getFollowings(from.getLoginId())
+		timelineFollowFacadeService.getFollowers(from.getLoginId())
 			.forEach(followingUser -> {
 				MessageCreatedActivityLogEntity messageCreated = new MessageCreatedActivityLogEntity();
 				messageCreated.setFrom(from);

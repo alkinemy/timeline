@@ -17,4 +17,8 @@ public class TimelineFollowQueryService {
 		return timelineFollowRepository.findAllByFollowerLoginId(loginId);
 	}
 
+	public List<TimelineFollowEntity> findAllByFollowingLoginId(String loginId) {
+		return timelineFollowRepository.findAllByFollowingLoginId(loginId);
+	}
+
 }
