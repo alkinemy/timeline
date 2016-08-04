@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 @EnableRetry
 @Configuration
-@EnableConfigurationProperties({ RestRetryProperties.class, TimelineServerRestProperties.class, TimelineMemberRestProperties.class })
+@EnableConfigurationProperties({ RestRetryProperties.class, TimelineServerRestProperties.class, TimelineUserRestProperties.class })
 public class RestConfig {
 
 	@Bean
@@ -26,7 +26,7 @@ public class RestConfig {
 	}
 
 	@Bean
-	public RestTemplate timelineMemberRestTemplate(TimelineMemberRestProperties properties) {
+	public RestTemplate timelineMemberRestTemplate(TimelineUserRestProperties properties) {
 		RestTemplate restTemplate = new RestTemplate(
 			clientHttpRequestFactory(properties.getConnectTimeout(), properties.getConnectionRequestTimeout(), properties.getReadTimeout()));
 		restTemplate.getInterceptors().add(new BasicAuthInterceptor(properties.getUsername(), properties.getPassword()));

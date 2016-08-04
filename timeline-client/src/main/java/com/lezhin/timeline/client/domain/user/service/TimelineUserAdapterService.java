@@ -1,6 +1,6 @@
 package com.lezhin.timeline.client.domain.user.service;
 
-import com.lezhin.timeline.client.domain.base.rest.TimelineMemberAdapterBase;
+import com.lezhin.timeline.client.domain.base.rest.TimelineUserAdapterBase;
 import com.lezhin.timeline.client.domain.user.dto.TimelineUserDto;
 import com.lezhin.timeline.client.domain.user.dto.TimelineUserInsertForm;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class TimelineUserAdapterService extends TimelineMemberAdapterBase {
+public class TimelineUserAdapterService extends TimelineUserAdapterBase {
 
 	public TimelineUserDto getUser(String loginId) {
 		String url = buildUrl("/users/{loginId}");

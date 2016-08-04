@@ -37,7 +37,6 @@ public class TimelineUserFacadeService {
 
 	public TimelineUserDto getUser(String targetUserLoginId) {
 		TimelineUserDto user = timelineUserAdapterService.getUser(targetUserLoginId);
-		//TODO 임시처리..
 		return TimelineUserDto.of(user.getLoginId(), user.getName());
 	}
 
