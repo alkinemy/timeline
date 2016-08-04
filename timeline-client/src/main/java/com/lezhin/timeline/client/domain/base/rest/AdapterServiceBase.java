@@ -14,7 +14,7 @@ public abstract class AdapterServiceBase {
 	@Autowired
 	private RetryTemplate timelineRetryTemplate;
 
-	protected <T> String buildUrl(String path) {
+	protected String buildUrl(String path) {
 		return new StringBuilder().append(getBaseUrl()).append(path).toString();
 	}
 

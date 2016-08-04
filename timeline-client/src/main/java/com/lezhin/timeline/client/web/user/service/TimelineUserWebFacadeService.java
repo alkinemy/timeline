@@ -24,8 +24,8 @@ public class TimelineUserWebFacadeService {
 	@Autowired
 	private SmartAssembler assembler;
 
-	public TimelineUserDto getUser(String targetUserLoginId) {
-		return timelineUserFacadeService.getUser(targetUserLoginId);
+	public TimelineUserDto getUser(String loginId) {
+		return timelineUserFacadeService.getUser(loginId);
 	}
 
 	public PagedResources<ActivityLogViewDto> getActivityLogs(TimelineUser user, ActivityLogSearchParam searchParam) {

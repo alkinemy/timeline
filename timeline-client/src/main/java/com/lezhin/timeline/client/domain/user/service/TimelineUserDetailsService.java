@@ -21,7 +21,7 @@ public class TimelineUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
-		return Optional.ofNullable(timelineUserAdapterService.getUser(loginId))
+		return Optional.ofNullable(timelineUserAdapterService.getUserDetails(loginId))
 			.map(user -> {
 				List<GrantedAuthority> authorities = new ArrayList<>();
 				authorities.add(new SimpleGrantedAuthority("ROLE_USER"));

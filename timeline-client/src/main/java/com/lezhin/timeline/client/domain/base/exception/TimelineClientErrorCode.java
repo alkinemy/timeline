@@ -1,4 +1,4 @@
-package com.lezhin.timeline.client.domain.base;
+package com.lezhin.timeline.client.domain.base.exception;
 
 import com.lezhin.timeline.common.domain.base.exception.ErrorCode;
 import com.lezhin.timeline.common.domain.base.exception.MessageException;

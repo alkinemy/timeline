@@ -1,7 +1,7 @@
 package com.lezhin.timeline.client.web.message.controller;
 
 import com.lezhin.timeline.client.domain.user.model.TimelineUser;
-import com.lezhin.timeline.client.web.message.dto.TimelineMessagePostApiForm;
+import com.lezhin.timeline.client.web.message.dto.TimelineMessagePostWebForm;
 import com.lezhin.timeline.client.web.message.service.TimelineMessageWebFacadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,8 +18,8 @@ public class TimelineMessageController {
 	private TimelineMessageWebFacadeService timelineMessageWebFacadeService;
 
 	@RequestMapping(path = "/message", method = RequestMethod.POST)
-	public String postMessage(@AuthenticationPrincipal TimelineUser user, TimelineMessagePostApiForm postForm) {
-		timelineMessageWebFacadeService.postMessage(user, postForm);
+	public String postMessage(@AuthenticationPrincipal TimelineUser user, TimelineMessagePostWebForm postWebForm) {
+		timelineMessageWebFacadeService.postMessage(user, postWebForm);
 		return "redirect:/";
 	}
 

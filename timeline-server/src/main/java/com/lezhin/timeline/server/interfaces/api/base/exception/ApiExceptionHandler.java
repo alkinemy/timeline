@@ -2,7 +2,7 @@ package com.lezhin.timeline.server.interfaces.api.base.exception;
 
 import com.lezhin.timeline.common.domain.base.exception.MessageException;
 import com.lezhin.timeline.common.interfaces.base.exception.ApiError;
-import com.lezhin.timeline.server.domain.base.exception.TimelineErrorCode;
+import com.lezhin.timeline.server.domain.base.exception.TimelineServerErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +17,8 @@ public class ApiExceptionHandler {
 	public ApiError handleException(Exception ex) {
 		log.warn("handleException", ex);
 		ApiError error = new ApiError();
-		error.setCode(TimelineErrorCode.INTERNAL.name());
-		error.setMessage(TimelineErrorCode.INTERNAL.getDefaultMessage());
+		error.setCode(TimelineServerErrorCode.INTERNAL.name());
+		error.setMessage(TimelineServerErrorCode.INTERNAL.getDefaultMessage());
 		return error;
 	}
 

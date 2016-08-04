@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TimelineMessagePostApiForm {
+public class TimelineMessagePostWebForm {
 
 	private String contents;
 	private String parentMessageId;

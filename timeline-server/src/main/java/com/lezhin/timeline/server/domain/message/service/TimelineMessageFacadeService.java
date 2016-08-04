@@ -3,7 +3,7 @@ package com.lezhin.timeline.server.domain.message.service;
 import com.lezhin.timeline.common.domain.base.exception.Exceptions;
 import com.lezhin.timeline.server.domain.activity.service.ActivityEventProducer;
 import com.lezhin.timeline.server.domain.base.assembler.SmartAssembler;
-import com.lezhin.timeline.server.domain.base.exception.TimelineErrorCode;
+import com.lezhin.timeline.server.domain.base.exception.TimelineServerErrorCode;
 import com.lezhin.timeline.server.domain.message.dto.NewsFeedConditions;
 import com.lezhin.timeline.server.domain.message.dto.TimelineMessageInsertForm;
 import com.lezhin.timeline.server.domain.message.dto.TimelineUserMessageSearchConditions;
@@ -57,7 +57,7 @@ public class TimelineMessageFacadeService {
 
 	public TimelineMessageEntity getTimelineMessage(String messageId) {
 		return timelineMessageQueryService.findOne(messageId)
-			.orElseThrow(() -> Exceptions.newException(TimelineErrorCode.ENTITY_NOT_FOUND, messageId));
+			.orElseThrow(() -> Exceptions.newException(TimelineServerErrorCode.ENTITY_NOT_FOUND, messageId));
 	}
 
 	public List<TimelineMessageEntity> getTimelineUserMessages(TimelineUserMessagesSearchConditions userMessageParam) {

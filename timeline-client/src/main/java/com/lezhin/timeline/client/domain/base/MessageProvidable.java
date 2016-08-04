@@ -1,4 +1,4 @@
-package com.lezhin.timeline.client.domain.activity.dto;
+package com.lezhin.timeline.client.domain.base;
 
 public interface MessageProvidable {
 

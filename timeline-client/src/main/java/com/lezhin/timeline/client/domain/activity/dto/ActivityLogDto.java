@@ -3,6 +3,7 @@ package com.lezhin.timeline.client.domain.activity.dto;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.lezhin.timeline.client.domain.activity.model.ActivityType;
+import com.lezhin.timeline.client.domain.base.MessageProvidable;
 import com.lezhin.timeline.client.domain.user.dto.TimelineUserDto;
 import lombok.Getter;
 import lombok.Setter;
