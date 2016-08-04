@@ -6,18 +6,16 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "timeline.rest")
-public class RestProperties {
+@ConfigurationProperties(prefix = "timeline.rest.member")
+public class TimelineMemberRestProperties {
 
 	private int connectTimeout = 3 * 1000;
 	private int connectionRequestTimeout = 3 * 1000;
 	private int readTimeout = 10 * 1000;
 
-	private int maxAttempts = 3;
-	private long initialInterval = 3 * 100L;
-	private long maxInterval = 1000L;
-
 	private String username;
 	private String password;
+
+	private String baseUrl;
 
 }

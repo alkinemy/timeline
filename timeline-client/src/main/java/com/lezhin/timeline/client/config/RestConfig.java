@@ -14,32 +14,41 @@ import org.springframework.web.client.RestTemplate;
 
 @EnableRetry
 @Configuration
-@EnableConfigurationProperties({ RestProperties.class, TimelineServerRestProperties.class, TimelineUserRestProperties.class })
+@EnableConfigurationProperties({ RestRetryProperties.class, TimelineServerRestProperties.class, TimelineMemberRestProperties.class })
 public class RestConfig {
 
 	@Bean
-	public RestTemplate timelineRestTemplate(RestProperties restProperties) {
-		RestTemplate restTemplate = new RestTemplate(clientHttpRequestFactory(restProperties));
-		restTemplate.getInterceptors().add(new BasicAuthInterceptor(restProperties.getUsername(), restProperties.getPassword()));
+	public RestTemplate timelineServerRestTemplate(TimelineServerRestProperties properties) {
+		RestTemplate restTemplate = new RestTemplate(
+			clientHttpRequestFactory(properties.getConnectTimeout(), properties.getConnectionRequestTimeout(), properties.getReadTimeout()));
+		restTemplate.getInterceptors().add(new BasicAuthInterceptor(properties.getUsername(), properties.getPassword()));
 		return restTemplate;
 	}
 
-	private ClientHttpRequestFactory clientHttpRequestFactory(RestProperties restProperties) {
+	@Bean
+	public RestTemplate timelineMemberRestTemplate(TimelineMemberRestProperties properties) {
+		RestTemplate restTemplate = new RestTemplate(
+			clientHttpRequestFactory(properties.getConnectTimeout(), properties.getConnectionRequestTimeout(), properties.getReadTimeout()));
+		restTemplate.getInterceptors().add(new BasicAuthInterceptor(properties.getUsername(), properties.getPassword()));
+		return restTemplate;
+	}
+
+	private ClientHttpRequestFactory clientHttpRequestFactory(int connectionTimeout, int connectionRequestTimeout, int readTimeout) {
 		HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-		clientHttpRequestFactory.setConnectTimeout(restProperties.getConnectTimeout());
-		clientHttpRequestFactory.setConnectionRequestTimeout(restProperties.getConnectionRequestTimeout());
-		clientHttpRequestFactory.setReadTimeout(restProperties.getReadTimeout());
+		clientHttpRequestFactory.setConnectTimeout(connectionTimeout);
+		clientHttpRequestFactory.setConnectionRequestTimeout(connectionRequestTimeout);
+		clientHttpRequestFactory.setReadTimeout(readTimeout);
 		return clientHttpRequestFactory;
 	}
 
 	@Bean
-	public RetryTemplate timelineRetryTemplate(RestProperties restProperties) {
+	public RetryTemplate timelineRetryTemplate(RestRetryProperties restRetryProperties) {
 		SimpleRetryPolicy policy = new SimpleRetryPolicy();
-		policy.setMaxAttempts(restProperties.getMaxAttempts());
+		policy.setMaxAttempts(restRetryProperties.getMaxAttempts());
 
 		ExponentialBackOffPolicy backOffPolicy = new ExponentialBackOffPolicy();
-		backOffPolicy.setInitialInterval(restProperties.getInitialInterval());
-		backOffPolicy.setMaxInterval(restProperties.getMaxInterval());
+		backOffPolicy.setInitialInterval(restRetryProperties.getInitialInterval());
+		backOffPolicy.setMaxInterval(restRetryProperties.getMaxInterval());
 		RetryTemplate retryTemplate = new RetryTemplate();
 		retryTemplate.setRetryPolicy(policy);
 		retryTemplate.setBackOffPolicy(backOffPolicy);

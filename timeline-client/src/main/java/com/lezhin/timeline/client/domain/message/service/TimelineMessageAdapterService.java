@@ -1,47 +1,36 @@
 package com.lezhin.timeline.client.domain.message.service;
 
-import com.lezhin.timeline.client.config.TimelineServerRestProperties;
+import com.lezhin.timeline.client.domain.base.adapter.TimelineServerAdapterBase;
 import com.lezhin.timeline.client.domain.message.dto.TimelineMessageDto;
 import com.lezhin.timeline.client.domain.message.dto.TimelineMessagePostForm;
 import com.lezhin.timeline.client.domain.message.dto.TimelineUserMessageParam;
 import com.lezhin.timeline.client.domain.message.dto.TimelineUserMessagesParam;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
-import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
-public class TimelineMessageAdapterService {
-
-	@Autowired
-	private RestTemplate timelineRestTemplate;
-	@Autowired
-	private RetryTemplate timelineRetryTemplate;
-
-	@Autowired
-	private TimelineServerRestProperties timelineServerRestProperties;
+public class TimelineMessageAdapterService extends TimelineServerAdapterBase {
 
 	public void postMessage(TimelineMessagePostForm postForm) {
-		String url = new StringBuilder().append(timelineServerRestProperties.getBaseUrl()).append("/messages").toString();
-		timelineRetryTemplate.execute(context -> timelineRestTemplate.postForObject(url, postForm, Void.class));
+		String url = new StringBuilder().append(getBaseUrl()).append("/messages").toString();
+		doWithRetry(context -> getRestTemplate().postForObject(url, postForm, Void.class));
 	}
 
 	public List<TimelineMessageDto> getNewsFeed(TimelineUserMessagesParam userMessageParam) {
-		String url = new StringBuilder().append(timelineServerRestProperties.getBaseUrl()).append("/newsfeed")
+		String url = new StringBuilder().append(getBaseUrl()).append("/newsfeed")
 			.append(buildUserMessageQueryString(userMessageParam))
 			.toString();
 		return getMessages(url, userMessageParam);
 	}
 
 	public List<TimelineMessageDto> getMessages(TimelineUserMessagesParam userMessageParam) {
-		String url = new StringBuilder().append(timelineServerRestProperties.getBaseUrl()).append("/messages")
+		String url = new StringBuilder().append(getBaseUrl()).append("/messages")
 			.append(buildUserMessageQueryString(userMessageParam))
 			.toString();
 		return getMessages(url, userMessageParam);
@@ -66,15 +55,15 @@ public class TimelineMessageAdapterService {
 		params.put("lastTimelineMessageId", userMessageParam.getLastTimelineMessageId());
 
 		ParameterizedTypeReference<List<TimelineMessageDto>> typeReference = new ParameterizedTypeReference<List<TimelineMessageDto>>() { };
-		return timelineRetryTemplate.execute(context -> timelineRestTemplate.exchange(url, HttpMethod.GET, null, typeReference, params).getBody());
+		return doWithRetry(context -> getRestTemplate().exchange(url, HttpMethod.GET, null, typeReference, params).getBody());
 	}
 
 	public TimelineMessageDto getMessage(TimelineUserMessageParam userMessageParam) {
-		String url = new StringBuilder().append(timelineServerRestProperties.getBaseUrl()).append("/{loginId}/messages/{messageId}")
+		String url = new StringBuilder().append(getBaseUrl()).append("/{loginId}/messages/{messageId}")
 			.toString();
 		Map<String, Object> params = new HashMap<>();
 		params.put("loginId", userMessageParam.getLoginId());
 		params.put("messageId", userMessageParam.getMessageId());
-		return timelineRetryTemplate.execute(context -> timelineRestTemplate.getForObject(url, TimelineMessageDto.class, params));
+		return doWithRetry(context -> getRestTemplate().getForObject(url, TimelineMessageDto.class, params));
 	}
 }

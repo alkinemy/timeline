@@ -9,6 +9,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "timeline.rest.server")
 public class TimelineServerRestProperties {
 
+	private int connectTimeout = 3 * 1000;
+	private int connectionRequestTimeout = 3 * 1000;
+	private int readTimeout = 10 * 1000;
+
+	private String username;
+	private String password;
+
 	private String baseUrl;
 
 }

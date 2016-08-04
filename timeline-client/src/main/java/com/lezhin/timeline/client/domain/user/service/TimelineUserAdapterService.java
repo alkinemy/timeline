@@ -1,37 +1,26 @@
 package com.lezhin.timeline.client.domain.user.service;
 
-import com.lezhin.timeline.client.config.TimelineUserRestProperties;
+import com.lezhin.timeline.client.domain.base.adapter.TimelineMemberAdapterBase;
 import com.lezhin.timeline.client.domain.user.dto.TimelineUserDto;
 import com.lezhin.timeline.client.domain.user.dto.TimelineUserInsertForm;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class TimelineUserAdapterService {
-
-	@Autowired
-	private RestTemplate timelineRestTemplate;
-	@Autowired
-	private RetryTemplate timelineRetryTemplate;
-
-	@Autowired
-	private TimelineUserRestProperties timelineUserRestProperties;
+public class TimelineUserAdapterService extends TimelineMemberAdapterBase {
 
 	public TimelineUserDto getUser(String loginId) {
-		String url = new StringBuilder().append(timelineUserRestProperties.getBaseUrl()).append("/users/{loginId}").toString();
+		String url = new StringBuilder().append(getBaseUrl()).append("/users/{loginId}").toString();
 		Map<String, Object> params = new HashMap<>();
 		params.put("loginId", loginId);
-		return timelineRetryTemplate.execute(context -> timelineRestTemplate.getForObject(url, TimelineUserDto.class, params));
+		return doWithRetry(context -> getRestTemplate().getForObject(url, TimelineUserDto.class, params));
 	}
 
 	public void registerUser(TimelineUserInsertForm insertForm) {
-		String url = new StringBuilder().append(timelineUserRestProperties.getBaseUrl()).append("/users").toString();
-		timelineRetryTemplate.execute(context -> timelineRestTemplate.postForObject(url, insertForm, Void.class));
+		String url = new StringBuilder().append(getBaseUrl()).append("/users").toString();
+		doWithRetry(context -> getRestTemplate().postForObject(url, insertForm, Void.class));
 	}
 
 }
