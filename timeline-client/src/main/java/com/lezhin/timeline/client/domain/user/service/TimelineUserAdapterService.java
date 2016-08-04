@@ -2,7 +2,7 @@ package com.lezhin.timeline.client.domain.user.service;
 
 import com.lezhin.timeline.client.domain.base.rest.TimelineUserAdapterBase;
 import com.lezhin.timeline.client.domain.user.dto.TimelineUserDto;
-import com.lezhin.timeline.client.domain.user.dto.TimelineUserInsertForm;
+import com.lezhin.timeline.client.domain.user.dto.TimelineUserRegisterForm;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -18,7 +18,7 @@ public class TimelineUserAdapterService extends TimelineUserAdapterBase {
 		return doWithRetry(context -> getRestTemplate().getForObject(url, TimelineUserDto.class, params));
 	}
 
-	public void registerUser(TimelineUserInsertForm insertForm) {
+	public void registerUser(TimelineUserRegisterForm insertForm) {
 		String url = buildUrl("/users");
 		doWithRetry(context -> getRestTemplate().postForObject(url, insertForm, Void.class));
 	}

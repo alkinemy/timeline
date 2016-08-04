@@ -13,12 +13,12 @@ import java.util.Map;
 @Service
 public class TimelineFollowAdapterService extends TimelineServerAdapterBase {
 
-	public void addFollowing(TimelineUserFollowForm followForm) {
+	public void follow(TimelineUserFollowForm followForm) {
 		String url = buildUrl("/follows/follow");
 		doWithRetry(context -> getRestTemplate().postForObject(url, followForm, Void.class));
 	}
 
-	public void removeFollowing(TimelineUserFollowForm followForm) {
+	public void unfollow(TimelineUserFollowForm followForm) {
 		String url = buildUrl("/follows/unfollow");
 		doWithRetry(context -> getRestTemplate().postForObject(url, followForm, Void.class));
 	}

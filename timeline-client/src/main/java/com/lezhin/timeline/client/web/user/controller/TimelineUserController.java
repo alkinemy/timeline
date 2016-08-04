@@ -3,11 +3,11 @@ package com.lezhin.timeline.client.web.user.controller;
 import com.lezhin.timeline.client.domain.user.model.TimelineUser;
 import com.lezhin.timeline.client.web.base.response.PagedResources;
 import com.lezhin.timeline.client.web.message.dto.TimelineMessageDtos;
-import com.lezhin.timeline.client.web.message.service.TimelineMessageApiFacadeService;
+import com.lezhin.timeline.client.web.message.service.TimelineMessageWebFacadeService;
 import com.lezhin.timeline.client.web.user.dto.ActivityLogSearchParam;
 import com.lezhin.timeline.client.web.user.dto.ActivityLogViewDto;
-import com.lezhin.timeline.client.web.user.dto.TimelineUserPageApiParam;
-import com.lezhin.timeline.client.web.user.service.TimelineUserApiFacadeService;
+import com.lezhin.timeline.client.web.message.dto.TimelineUserMessagesParam;
+import com.lezhin.timeline.client.web.user.service.TimelineUserWebFacadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -21,49 +21,48 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TimelineUserController {
 
 	@Autowired
-	private TimelineUserApiFacadeService timelineUserApiFacadeService;
+	private TimelineUserWebFacadeService timelineUserWebFacadeService;
 	@Autowired
-	private TimelineMessageApiFacadeService timelineMessageApiFacadeService;
+	private TimelineMessageWebFacadeService timelineMessageWebFacadeService;
 
 	@RequestMapping(path = {"", "/newsfeed"}, method = RequestMethod.GET)
 	public String newsFeedPage(
 		@AuthenticationPrincipal TimelineUser user,
-		TimelineUserPageApiParam userPageParam,
+		TimelineUserMessagesParam userPageParam,
 		ActivityLogSearchParam searchParam,
 		Model model) {
 
-		model.addAttribute("timelineMessages", timelineMessageApiFacadeService.getNewsFeed(user, userPageParam));
-		model.addAttribute("activityLogs", timelineUserApiFacadeService.getActivityLogs(user, searchParam));
+		model.addAttribute("timelineMessages", timelineMessageWebFacadeService.getNewsFeed(user, userPageParam));
+		model.addAttribute("activityLogs", timelineUserWebFacadeService.getActivityLogs(user, searchParam));
 		return "user/newsfeed";
 	}
 
 	@RequestMapping(path = "/newsfeed/load", method = RequestMethod.GET)
 	@ResponseBody
-	public TimelineMessageDtos loadNewsFeed(@AuthenticationPrincipal TimelineUser user, TimelineUserPageApiParam userPageParam) {
-		return timelineMessageApiFacadeService.getNewsFeed(user, userPageParam);
+	public TimelineMessageDtos loadNewsFeed(@AuthenticationPrincipal TimelineUser user, TimelineUserMessagesParam userPageParam) {
+		return timelineMessageWebFacadeService.getNewsFeed(user, userPageParam);
 	}
 
 	@RequestMapping(path = "/activities/load", method = RequestMethod.GET)
 	@ResponseBody
 	public PagedResources<ActivityLogViewDto> loadActivities(@AuthenticationPrincipal TimelineUser user, ActivityLogSearchParam searchParam) {
-		return timelineUserApiFacadeService.getActivityLogs(user, searchParam);
+		return timelineUserWebFacadeService.getActivityLogs(user, searchParam);
 	}
 
 	@RequestMapping(path = "/{loginId}", method = RequestMethod.GET)
-	public String userPage(@AuthenticationPrincipal TimelineUser user,
-							@PathVariable("loginId") String targetUserLoginId,
-							TimelineUserPageApiParam userPageParam,
+	public String userPage(@PathVariable("loginId") String targetUserLoginId,
+							TimelineUserMessagesParam userPageParam,
 							Model model) {
 
-		model.addAttribute("user", timelineUserApiFacadeService.getUser(targetUserLoginId));
-		model.addAttribute("timelineMessages", timelineMessageApiFacadeService.getMessages(targetUserLoginId, userPageParam));
+		model.addAttribute("user", timelineUserWebFacadeService.getUser(targetUserLoginId));
+		model.addAttribute("timelineMessages", timelineMessageWebFacadeService.getMessages(targetUserLoginId, userPageParam));
 		return "user/user-home";
 	}
 
 	@RequestMapping(path = "/{loginId}/messages/load", method = RequestMethod.GET)
 	@ResponseBody
-	public TimelineMessageDtos loadUserMessages(@PathVariable("loginId") String targetUserLoginId, TimelineUserPageApiParam userPageParam) {
-		return timelineMessageApiFacadeService.getMessages(targetUserLoginId, userPageParam);
+	public TimelineMessageDtos loadUserMessages(@PathVariable("loginId") String targetUserLoginId, TimelineUserMessagesParam userPageParam) {
+		return timelineMessageWebFacadeService.getMessages(targetUserLoginId, userPageParam);
 	}
 
 }

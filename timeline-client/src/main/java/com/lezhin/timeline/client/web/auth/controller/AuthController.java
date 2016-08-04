@@ -1,7 +1,7 @@
 package com.lezhin.timeline.client.web.auth.controller;
 
 import com.lezhin.timeline.client.web.auth.dto.SignUpForm;
-import com.lezhin.timeline.client.web.auth.service.AuthApiFacadeService;
+import com.lezhin.timeline.client.web.auth.service.AuthWebFacadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AuthController {
 
 	@Autowired
-	private AuthApiFacadeService authApiFacadeService;
+	private AuthWebFacadeService authWebFacadeService;
 
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
 	public String loginPage() {
@@ -25,7 +25,7 @@ public class AuthController {
 
 	@RequestMapping(path = "/signup", method = RequestMethod.POST)
 	public String signUp(SignUpForm signUpForm) {
-		authApiFacadeService.signUp(signUpForm);
+		authWebFacadeService.signUp(signUpForm);
 		return loginPage();
 	}
 

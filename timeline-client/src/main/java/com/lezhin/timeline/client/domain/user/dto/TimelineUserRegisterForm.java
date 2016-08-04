@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TimelineUserInsertForm {
+public class TimelineUserRegisterForm {
 
 	private String loginId;
 	private String name;

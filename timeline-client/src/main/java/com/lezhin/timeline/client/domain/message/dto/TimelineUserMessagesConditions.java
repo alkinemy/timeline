@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TimelineUserMessagesParam {
+public class TimelineUserMessagesConditions {
 
 	private String loginId;
 	private Integer size;

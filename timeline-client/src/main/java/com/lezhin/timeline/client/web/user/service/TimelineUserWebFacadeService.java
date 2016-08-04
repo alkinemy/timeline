@@ -13,10 +13,8 @@ import com.lezhin.timeline.client.web.user.dto.ActivityLogViewDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class TimelineUserApiFacadeService {
+public class TimelineUserWebFacadeService {
 
 	@Autowired
 	private TimelineUserFacadeService timelineUserFacadeService;
@@ -30,18 +28,6 @@ public class TimelineUserApiFacadeService {
 		return timelineUserFacadeService.getUser(targetUserLoginId);
 	}
 
-	public void follow(TimelineUser follower, String followingLoginId) {
-		TimelineUserDto followerDto = assembler.assemble(follower, TimelineUserDto.class);
-		TimelineUserDto followingDto = timelineUserFacadeService.getUser(followingLoginId);
-		timelineUserFacadeService.follow(followerDto, followingDto);
-	}
-
-	public void unfollow(TimelineUser follower, String followingLoginId) {
-		TimelineUserDto followerDto = assembler.assemble(follower, TimelineUserDto.class);
-		TimelineUserDto followingDto = timelineUserFacadeService.getUser(followingLoginId);
-		timelineUserFacadeService.unfollow(followerDto, followingDto);
-	}
-
 	public PagedResources<ActivityLogViewDto> getActivityLogs(TimelineUser user, ActivityLogSearchParam searchParam) {
 		ActivityLogSearchConditions conditions = assembler.assemble(searchParam, ActivityLogSearchConditions.class);
 		conditions.setLoginId(user.getLoginId());
@@ -49,11 +35,4 @@ public class TimelineUserApiFacadeService {
 		return assembler.assemble(activityLogs, ActivityLogDto.class, ActivityLogViewDto.class);
 	}
 
-	public List<TimelineUserDto> getFollowings(String loginId) {
-		return timelineUserFacadeService.getFollowings(loginId);
-	}
-
-	public List<TimelineUserDto> getFollowers(String loginId) {
-		return timelineUserFacadeService.getFollowers(loginId);
-	}
 }

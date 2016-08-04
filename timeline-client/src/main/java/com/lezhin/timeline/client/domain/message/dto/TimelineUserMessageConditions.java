@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
-public class TimelineUserMessageParam {
+public class TimelineUserMessageConditions {
 
 	private String loginId;
 	private String messageId;

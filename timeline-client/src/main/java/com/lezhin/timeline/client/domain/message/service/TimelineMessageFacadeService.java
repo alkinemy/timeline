@@ -2,8 +2,8 @@ package com.lezhin.timeline.client.domain.message.service;
 
 import com.lezhin.timeline.client.domain.message.dto.TimelineMessageDto;
 import com.lezhin.timeline.client.domain.message.dto.TimelineMessagePostForm;
-import com.lezhin.timeline.client.domain.message.dto.TimelineUserMessageParam;
-import com.lezhin.timeline.client.domain.message.dto.TimelineUserMessagesParam;
+import com.lezhin.timeline.client.domain.message.dto.TimelineUserMessageConditions;
+import com.lezhin.timeline.client.domain.message.dto.TimelineUserMessagesConditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +15,11 @@ public class TimelineMessageFacadeService {
 	@Autowired
 	private TimelineMessageAdapterService timelineMessageAdapterService;
 
-	public List<TimelineMessageDto> getNewsFeed(TimelineUserMessagesParam userMessageParam) {
+	public List<TimelineMessageDto> getNewsFeed(TimelineUserMessagesConditions userMessageParam) {
 		return timelineMessageAdapterService.getNewsFeed(userMessageParam);
 	}
 
-	public List<TimelineMessageDto> getMessages(TimelineUserMessagesParam userMessageParam) {
+	public List<TimelineMessageDto> getMessages(TimelineUserMessagesConditions userMessageParam) {
 		return timelineMessageAdapterService.getMessages(userMessageParam);
 	}
 
@@ -27,7 +27,7 @@ public class TimelineMessageFacadeService {
 		timelineMessageAdapterService.postMessage(postForm);
 	}
 
-	public TimelineMessageDto getMessage(TimelineUserMessageParam userMessageParam) {
+	public TimelineMessageDto getMessage(TimelineUserMessageConditions userMessageParam) {
 		//TODO null처리 필요
 		return timelineMessageAdapterService.getMessage(userMessageParam);
 	}
