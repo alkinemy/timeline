@@ -63,7 +63,7 @@
             }).done(function(activityLogs) {
                 $("#activity-logs").empty();
                 $.each(activityLogs.content, function(index, value) {
-                    $("#activity-logs").append("<p>" + value.message + "<br/>시간: " + value.createdDate + "</p>");
+                    $("#activity-logs").append("<p>" + value.message + "<br/>시간: " + value.activityDate + "</p>");
                 });
                 if ((activityLogs.page.totalPages - 1) === activityLogs.page.number) {
                     $("#next-activity-logs-form > input[name=page]").val(activityLogs.page.number);
@@ -94,7 +94,7 @@
             }).done(function(activityLogs) {
                 $("#activity-logs").empty();
                 $.each(activityLogs.content, function(index, value) {
-                    $("#activity-logs").append("<p>" + value.message + "<br/>시간: " + value.createdDate + "</p>");
+                    $("#activity-logs").append("<p>" + value.message + "<br/>시간: " + value.activityDate + "</p>");
                 });
                 if (activityLogs.page.number === 0) {
                     $("#previous-activity-logs-form > input[name=page]").val(activityLogs.page.number);
@@ -127,7 +127,7 @@
                     $("#timeline-messages").append("<p>이름: " + value.author.name + "<br/>내용: " + value.contents + "<br/>" + value.createdDate + "</p>");
                 });
                 if (timelineMessages.lastTimelineMessageId === null) {
-                    $("#load-timeline-message").remove();
+                    $("#load-timeline-messages").remove();
                 } else {
                     $("#load-timeline-messages-form > [name=lastTimelineMessageId]").val(timelineMessages.lastTimelineMessageId);
                 }

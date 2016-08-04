@@ -24,7 +24,7 @@
                 <div th:replace="partial/message/message">message!</div>
             </div>
         </div>
-        <div th:if="${timelineMessages.messages}" id="load-timeline-message">
+        <div th:if="${timelineMessages.messages}" id="load-timeline-messages">
             <form id="load-timeline-messages-form" th:action="@{/{loginId}/messages/load(loginId=${user.loginId})}" method="get">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 <input type="hidden" th:name="lastTimelineMessageId" th:value="${timelineMessages.lastTimelineMessageId}"/>
@@ -47,7 +47,7 @@
                     $("#timeline-messages").append("<p>이름: " + value.author.name + "<br/>내용: " + value.contents + "<br/>" + value.createdDate + "</p>");
                 });
                 if (timelineMessages.lastTimelineMessageId === null) {
-                    $("#load-timeline-message").remove();
+                    $("#load-timeline-messages").remove();
                 } else {
                     $("#load-timeline-messages-form > [name=lastTimelineMessageId]").val(timelineMessages.lastTimelineMessageId);
                 }
