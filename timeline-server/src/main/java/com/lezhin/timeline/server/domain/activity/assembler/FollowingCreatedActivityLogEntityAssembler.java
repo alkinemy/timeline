@@ -17,8 +17,8 @@ public class FollowingCreatedActivityLogEntityAssembler extends AbstractAssemble
 	@Override
 	protected FollowingCreatedActivityLogEntity doAssemble(FollowCreatedEventForm eventForm) {
 		FollowingCreatedActivityLogEntity entity = new FollowingCreatedActivityLogEntity();
-		entity.setFrom(assembler.assemble(eventForm.getFollowing(), TimelineUser.class));
-		entity.setTo(assembler.assemble(eventForm.getFollower(), TimelineUser.class));
+		entity.setFrom(assembler.assemble(eventForm.getFollower(), TimelineUser.class));
+		entity.setTo(assembler.assemble(eventForm.getFollowing(), TimelineUser.class));
 		return entity;
 	}
 
