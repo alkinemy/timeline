@@ -25,8 +25,8 @@ public class TimelineMessageQueryService {
 		return Optional.ofNullable(timelineMessageRepository.findOne(predicate));
 	}
 
-	public List<TimelineMessageEntity> findFollowingMessages(NewsFeedConditions condition) {
-		return timelineMessageRepository.findAllFollowingTimelineMessages(condition.getLoginId(), condition.getLastTimelineMessageId(), condition.getSize());
+	public List<TimelineMessageEntity> findAllFollowingMessages(NewsFeedConditions conditions) {
+		return timelineMessageRepository.findAllFollowingTimelineMessages(conditions);
 	}
 
 	public List<TimelineMessageEntity> findAll(Predicate predicate, Pageable pageable) {

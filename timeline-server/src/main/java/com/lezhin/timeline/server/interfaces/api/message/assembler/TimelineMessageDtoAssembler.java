@@ -21,7 +21,7 @@ public class TimelineMessageDtoAssembler extends AbstractAssembler<TimelineMessa
 		dto.setAuthor(assembler.assemble(entity.getAuthor(), TimelineUserDto.class));
 		dto.setContents(entity.getContents());
 		dto.setParentMessageId(entity.getParentMessageId());
-		dto.setCreatedDate(entity.getCreatedDate());
+		dto.setMessageDate(entity.getMessageDate());
 		return dto;
 	}
 

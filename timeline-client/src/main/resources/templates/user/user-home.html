@@ -49,7 +49,7 @@
                 }
             }).done(function(timelineMessages) {
                 $.each(timelineMessages.messages, function(index, value) {
-                    $("#timeline-messages").append("<p>이름: " + value.author.name + "<br/>내용: " + value.contents + "<br/>" + value.createdDate + "</p>");
+                    $("#timeline-messages").append("<p>이름: " + value.author.name + "<br/>내용: " + value.contents + "<br/>" + value.messageDate + "</p>");
                 });
                 if (timelineMessages.lastTimelineMessageId === null) {
                     $("#load-timeline-messages").remove();

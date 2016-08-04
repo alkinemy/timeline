@@ -27,7 +27,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatcher("/api/**")
 				.authorizeRequests().anyRequest().hasRole("API")
 			.and()
-	//			.addFilterAfter()
 				.exceptionHandling()
 				.authenticationEntryPoint(http403ForbiddenEntryPoint());
 	}

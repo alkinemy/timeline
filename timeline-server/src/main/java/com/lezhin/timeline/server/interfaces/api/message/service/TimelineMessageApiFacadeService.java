@@ -7,8 +7,8 @@ import com.lezhin.timeline.server.domain.message.dto.TimelineUserMessagesSearchC
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
 import com.lezhin.timeline.server.domain.message.service.TimelineMessageFacadeService;
 import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineMessageDto;
-import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineMessageInsertApiForm;
-import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineUserMessageApiConditions;
+import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineMessagePostForm;
+import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineUserMessageSearchParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,26 +23,26 @@ public class TimelineMessageApiFacadeService {
 	@Autowired
 	private SmartAssembler assembler;
 
-	public void postMessage(TimelineMessageInsertApiForm insertApiForm) {
-		TimelineMessageInsertForm insertForm = assembler.assemble(insertApiForm, TimelineMessageInsertForm.class);
+	public void postMessage(TimelineMessagePostForm postForm) {
+		TimelineMessageInsertForm insertForm = assembler.assemble(postForm, TimelineMessageInsertForm.class);
 		timelineMessageFacadeService.insert(insertForm);
 	}
 
-	public List<TimelineMessageDto> listMessages(TimelineUserMessageApiConditions userMessageApiParam) {
-		TimelineUserMessagesSearchConditions userMessageParam = assembler.assemble(userMessageApiParam, TimelineUserMessagesSearchConditions.class);
-		List<TimelineMessageEntity> timelineMessages = timelineMessageFacadeService.getTimelineUserMessages(userMessageParam);
+	public List<TimelineMessageDto> listMessages(TimelineUserMessageSearchParam searchParam) {
+		TimelineUserMessagesSearchConditions searchConditions = assembler.assemble(searchParam, TimelineUserMessagesSearchConditions.class);
+		List<TimelineMessageEntity> timelineMessages = timelineMessageFacadeService.getTimelineUserMessages(searchConditions);
 		return assembler.assemble(timelineMessages, TimelineMessageDto.class);
 	}
 
-	public List<TimelineMessageDto> getNewsFeed(TimelineUserMessageApiConditions userMessageApiParam) {
-		TimelineUserMessagesSearchConditions userMessageParam = assembler.assemble(userMessageApiParam, TimelineUserMessagesSearchConditions.class);
-		List<TimelineMessageEntity> timelineMessages = timelineMessageFacadeService.getNewsFeed(userMessageParam);
+	public List<TimelineMessageDto> getNewsFeed(TimelineUserMessageSearchParam searchParam) {
+		TimelineUserMessagesSearchConditions searchConditions = assembler.assemble(searchParam, TimelineUserMessagesSearchConditions.class);
+		List<TimelineMessageEntity> timelineMessages = timelineMessageFacadeService.getNewsFeed(searchConditions);
 		return assembler.assemble(timelineMessages, TimelineMessageDto.class);
 	}
 
 	public TimelineMessageDto getMessage(String loginId, String messageId) {
-		TimelineUserMessageSearchConditions conditions = TimelineUserMessageSearchConditions.of(loginId, messageId);
-		TimelineMessageEntity timelineMessage = timelineMessageFacadeService.getTimelineMessage(conditions);
+		TimelineUserMessageSearchConditions searchConditions = TimelineUserMessageSearchConditions.of(loginId, messageId);
+		TimelineMessageEntity timelineMessage = timelineMessageFacadeService.getTimelineMessage(searchConditions);
 		return assembler.assemble(timelineMessage, TimelineMessageDto.class);
 	}
 

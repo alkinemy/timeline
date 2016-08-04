@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Getter
 @Setter
-public class TimelineUserMessageApiConditions {
+public class TimelineUserMessageSearchParam {
 
 	@NotBlank
 	private String loginId;

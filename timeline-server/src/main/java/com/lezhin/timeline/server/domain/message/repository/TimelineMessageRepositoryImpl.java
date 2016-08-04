@@ -2,6 +2,7 @@ package com.lezhin.timeline.server.domain.message.repository;
 
 import com.lezhin.timeline.server.domain.follow.model.QTimelineFollowEntity;
 import com.lezhin.timeline.server.domain.follow.model.TimelineFollowEntity;
+import com.lezhin.timeline.server.domain.message.dto.NewsFeedConditions;
 import com.lezhin.timeline.server.domain.message.model.QTimelineMessageEntity;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
 import com.mysema.query.jpa.JPQLQuery;
@@ -17,37 +18,21 @@ public class TimelineMessageRepositoryImpl extends QueryDslRepositorySupport imp
 	}
 
 	@Override
-	public List<TimelineMessageEntity> findAllFollowingTimelineMessages(String timelineLoginId, Long lastTimelineMessageId, Integer size) {
+	public List<TimelineMessageEntity> findAllFollowingTimelineMessages(NewsFeedConditions conditions) {
 		QTimelineFollowEntity qTimelineFollowEntity = QTimelineFollowEntity.timelineFollowEntity;
 		QTimelineMessageEntity qTimelineMessageEntity = QTimelineMessageEntity.timelineMessageEntity;
-//		JPQLQuery query = from(qTimelineFollowEntity).where(qTimelineFollowEntity.follower.loginId.eq(timelineLoginId))
-//			.innerJoin(qTimelineMessageEntity).on(qTimelineFollowEntity.following.loginId.eq(qTimelineMessageEntity.author.loginId));
-//		if (lastTimelineMessageId != null) {
-//			query.where(qTimelineMessageEntity.id.lt(lastTimelineMessageId));
-//		}
-//		query.limit(size);
-//		return query.list(qTimelineMessageEntity);
 
-		List<TimelineFollowEntity> follows = from(qTimelineFollowEntity).where(qTimelineFollowEntity.follower.loginId.eq(timelineLoginId))
+		List<TimelineFollowEntity> follows = from(qTimelineFollowEntity).where(qTimelineFollowEntity.follower.loginId.eq(conditions.getLoginId()))
 			.list(qTimelineFollowEntity);
 		JPQLQuery query = from(qTimelineMessageEntity).where(qTimelineMessageEntity.author.loginId.in(
 			follows.stream()
 				.map(follow -> follow.getFollowing().getLoginId())
 				.collect(Collectors.toList())));
-		if (lastTimelineMessageId != null) {
-			query.where(qTimelineMessageEntity.id.lt(lastTimelineMessageId));
+		if (conditions.getLastTimelineMessageId() != null) {
+			query.where(qTimelineMessageEntity.id.lt(conditions.getLastTimelineMessageId()));
 		}
-		query.orderBy(qTimelineMessageEntity.id.desc()).limit(size);
+		query.orderBy(qTimelineMessageEntity.id.desc()).limit(conditions.getSize());
 		return query.list(qTimelineMessageEntity);
-
-//		JPQLQuery query = from(qTimelineFollowEntity, qTimelineMessageEntity)
-//			.where(qTimelineFollowEntity.follower.loginId.eq(timelineLoginId)
-//				.and(qTimelineFollowEntity.following.loginId.eq(qTimelineMessageEntity.author.loginId)));
-//		if (lastTimelineMessageId != null) {
-//			query.where(qTimelineMessageEntity.id.lt(lastTimelineMessageId));
-//		}
-//		query.orderBy(qTimelineMessageEntity.id.desc()).limit(size);
-//		return query.list(qTimelineMessageEntity);
 	}
 
 }

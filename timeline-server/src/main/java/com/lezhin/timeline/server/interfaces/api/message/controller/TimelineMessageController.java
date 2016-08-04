@@ -1,8 +1,8 @@
 package com.lezhin.timeline.server.interfaces.api.message.controller;
 
 import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineMessageDto;
-import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineMessageInsertApiForm;
-import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineUserMessageApiConditions;
+import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineMessagePostForm;
+import com.lezhin.timeline.server.interfaces.api.message.dto.TimelineUserMessageSearchParam;
 import com.lezhin.timeline.server.interfaces.api.message.service.TimelineMessageApiFacadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +17,13 @@ public class TimelineMessageController {
 	private TimelineMessageApiFacadeService timelineMessageApiFacadeService;
 
 	@RequestMapping(path = "/messages", method = RequestMethod.POST)
-	public void post(@RequestBody TimelineMessageInsertApiForm insertApiForm) {
-		timelineMessageApiFacadeService.postMessage(insertApiForm);
+	public void post(@RequestBody TimelineMessagePostForm postForm) {
+		timelineMessageApiFacadeService.postMessage(postForm);
 	}
 
 	@RequestMapping(path = "/messages", method = RequestMethod.GET)
-	public List<TimelineMessageDto> list(TimelineUserMessageApiConditions userMessageConditions) {
-		return timelineMessageApiFacadeService.listMessages(userMessageConditions);
+	public List<TimelineMessageDto> list(TimelineUserMessageSearchParam searchParam) {
+		return timelineMessageApiFacadeService.listMessages(searchParam);
 	}
 
 	@RequestMapping(path = "/{loginId}/messages/{messageId}", method = RequestMethod.GET)
@@ -32,7 +32,7 @@ public class TimelineMessageController {
 	}
 
 	@RequestMapping(path = "/newsfeed", method = RequestMethod.GET)
-	public List<TimelineMessageDto> getNewsFeed(TimelineUserMessageApiConditions userMessageConditions) {
+	public List<TimelineMessageDto> getNewsFeed(TimelineUserMessageSearchParam userMessageConditions) {
 		return timelineMessageApiFacadeService.getNewsFeed(userMessageConditions);
 	}
 

@@ -14,6 +14,6 @@ public class TimelineMessageDto {
 	private TimelineUserDto author;
 	private String contents;
 	private String parentMessageId;
-	private LocalDateTime createdDate;
+	private LocalDateTime messageDate;
 
 }

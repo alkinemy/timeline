@@ -41,7 +41,6 @@ public class TimelineMessageFacadeService {
 		TimelineMessageEntity message = createTimelineMessage(insertForm);
 		timelineMessageCommandService.insert(message);
 		log.debug("Timeline message inserted, ID: {}", message.getMessageId());
-
 		activityEventProducer.triggerTimelineMessageCreatedEvent(message.getMessageId());
 	}
 
@@ -60,15 +59,15 @@ public class TimelineMessageFacadeService {
 			.orElseThrow(() -> Exceptions.newException(TimelineServerErrorCode.ENTITY_NOT_FOUND, messageId));
 	}
 
-	public List<TimelineMessageEntity> getTimelineUserMessages(TimelineUserMessagesSearchConditions userMessageParam) {
+	public List<TimelineMessageEntity> getTimelineUserMessages(TimelineUserMessagesSearchConditions searchConditions) {
 		TimelineUserMessagesSearchContext context = TimelineUserMessagesSearchContext.of(this);
-		Pageable pageable = new PageRequest(0, userMessageParam.getSize(), Sort.Direction.DESC, "id");
-		return timelineMessageQueryService.findAll(userMessageParam.toPredicate(context), pageable);
+		Pageable pageable = new PageRequest(0, searchConditions.getSize(), Sort.Direction.DESC, "id");
+		return timelineMessageQueryService.findAll(searchConditions.toPredicate(context), pageable);
 	}
 
-	public List<TimelineMessageEntity> getNewsFeed(TimelineUserMessagesSearchConditions userMessageParam) {
-		NewsFeedConditions condition = assembler.assemble(userMessageParam, NewsFeedConditions.class);
-		return timelineMessageQueryService.findFollowingMessages(condition);
+	public List<TimelineMessageEntity> getNewsFeed(TimelineUserMessagesSearchConditions searchConditions) {
+		NewsFeedConditions newsFeedConditions = assembler.assemble(searchConditions, NewsFeedConditions.class);
+		return timelineMessageQueryService.findAllFollowingMessages(newsFeedConditions);
 	}
 
 }
