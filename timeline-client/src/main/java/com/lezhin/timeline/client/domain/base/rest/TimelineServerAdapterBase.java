@@ -1,19 +1,19 @@
-package com.lezhin.timeline.client.domain.base.adapter;
+package com.lezhin.timeline.client.domain.base.rest;
 
-import com.lezhin.timeline.client.config.TimelineMemberRestProperties;
+import com.lezhin.timeline.client.config.TimelineServerRestProperties;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.client.RestTemplate;
 
-public abstract class TimelineMemberAdapterBase extends AdapterServiceBase {
+public abstract class TimelineServerAdapterBase extends AdapterServiceBase {
 
 	@Autowired
-	private TimelineMemberRestProperties properties;
+	private TimelineServerRestProperties properties;
 
 	@Getter
 	@Autowired
-	@Qualifier("timelineMemberRestTemplate")
+	@Qualifier("timelineServerRestTemplate")
 	private RestTemplate restTemplate;
 
 	@Override
