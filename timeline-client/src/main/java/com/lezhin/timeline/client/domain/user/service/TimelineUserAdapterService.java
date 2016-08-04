@@ -20,7 +20,7 @@ public class TimelineUserAdapterService extends TimelineUserAdapterBase {
 	}
 
 	public TimelineUserDetailsDto getUserDetails(String loginId) {
-		String url = buildUrl("/users/{loginId}");
+		String url = buildUrl("/users/{loginId}/details");
 		Map<String, Object> params = new HashMap<>();
 		params.put("loginId", loginId);
 		return doWithRetry(context -> getRestTemplate().getForObject(url, TimelineUserDetailsDto.class, params));

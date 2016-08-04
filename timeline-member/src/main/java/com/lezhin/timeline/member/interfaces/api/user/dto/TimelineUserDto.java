@@ -9,6 +9,5 @@ public class TimelineUserDto {
 
 	private String loginId;
 	private String name;
-	private String password;
 
 }

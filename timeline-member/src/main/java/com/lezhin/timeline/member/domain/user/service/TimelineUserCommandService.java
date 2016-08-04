@@ -12,7 +12,6 @@ public class TimelineUserCommandService {
 	private TimelineUserRepository timelineUserRepository;
 
 	public void insert(TimelineUserEntity entity) {
-		//TODO client에서 rest로 호출처리 필요
 		timelineUserRepository.save(entity);
 	}
 

@@ -26,8 +26,7 @@ public class TimelineUserFacadeService {
 	}
 
 	public TimelineUserDto getUser(String loginId) {
-		TimelineUserDto user = timelineUserAdapterService.getUser(loginId);
-		return TimelineUserDto.of(user.getLoginId(), user.getName());
+		return timelineUserAdapterService.getUser(loginId);
 	}
 
 }
