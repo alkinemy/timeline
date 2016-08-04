@@ -3,4 +3,8 @@
     <span th:text="${message.contents}">내용</span>
     <br/>
     <span th:text="${#temporals.format(message.createdDate, 'yyyy/MM/dd HH:mm:ss')}">생성일자</span>
+    <br/>
+    <a th:href="@{/{loginId}/messages/{messageId}(loginId=${message.author.loginId},messageId=${message.messageId})}">
+        <button type="button">상세</button>
+    </a>
 </p>
