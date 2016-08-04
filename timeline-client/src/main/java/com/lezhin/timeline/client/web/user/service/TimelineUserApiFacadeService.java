@@ -13,6 +13,8 @@ import com.lezhin.timeline.client.web.user.dto.ActivityLogViewDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TimelineUserApiFacadeService {
 
@@ -47,4 +49,11 @@ public class TimelineUserApiFacadeService {
 		return assembler.assemble(activityLogs, ActivityLogDto.class, ActivityLogViewDto.class);
 	}
 
+	public List<TimelineUserDto> getFollowings(String loginId) {
+		return timelineUserFacadeService.getFollowings(loginId);
+	}
+
+	public List<TimelineUserDto> getFollowers(String loginId) {
+		return timelineUserFacadeService.getFollowers(loginId);
+	}
 }

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TimelineUserFacadeService {
 
@@ -46,4 +48,11 @@ public class TimelineUserFacadeService {
 		timelineFollowAdapterService.removeFollowing(followForm);
 	}
 
+	public List<TimelineUserDto> getFollowings(String loginId) {
+		return timelineFollowAdapterService.getFollowings(TimelineUserDto.of(loginId));
+	}
+
+	public List<TimelineUserDto> getFollowers(String loginId) {
+		return timelineFollowAdapterService.getFollowers(TimelineUserDto.of(loginId));
+	}
 }

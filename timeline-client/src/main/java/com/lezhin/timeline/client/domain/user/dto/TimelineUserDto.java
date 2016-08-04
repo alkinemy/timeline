@@ -15,6 +15,10 @@ public class TimelineUserDto {
 	private String name;
 	private String password;
 
+	public static TimelineUserDto of(String loginId) {
+		return new TimelineUserDto(loginId, null, null);
+	}
+
 	public static TimelineUserDto of(String loginId, String name) {
 		return new TimelineUserDto(loginId, name, null);
 	}

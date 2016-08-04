@@ -27,6 +27,11 @@ public class TimelineFollowApiFacadeService {
 		return assembler.assemble(followings, TimelineUserDto.class);
 	}
 
+	public List<TimelineUserDto> getFollowers(TimelineUserDto user) {
+		List<TimelineUser> followers = timelineFollowFacadeService.getFollowers(user.getLoginId());
+		return assembler.assemble(followers, TimelineUserDto.class);
+	}
+
 	public void addFollowing(FollowingApiInsertForm insertApiForm) {
 		TimelineFollowingInsertForm insertForm = assembler.assemble(insertApiForm, TimelineFollowingInsertForm.class);
 		timelineFollowFacadeService.insert(insertForm);

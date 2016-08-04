@@ -19,9 +19,14 @@ public class TimelineFollowController {
 	@Autowired
 	private TimelineFollowApiFacadeService timelineFollowApiFacadeService;
 
-	@RequestMapping(path = "", method = RequestMethod.GET)
+	@RequestMapping(path = "/followings", method = RequestMethod.GET)
 	public List<TimelineUserDto> getFollowings(TimelineUserDto user) {
 		return timelineFollowApiFacadeService.getFollowings(user);
+	}
+
+	@RequestMapping(path = "/followers", method = RequestMethod.GET)
+	public List<TimelineUserDto> getFollowers(TimelineUserDto user) {
+		return timelineFollowApiFacadeService.getFollowers(user);
 	}
 
 	@RequestMapping(path = "/follow", method = RequestMethod.POST)
