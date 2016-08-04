@@ -1,6 +1,5 @@
 package com.lezhin.timeline.client.domain.activity.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.lezhin.timeline.client.domain.activity.model.ActivityType;
@@ -12,15 +11,18 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, include=JsonTypeInfo.As.EXTERNAL_PROPERTY, property = "type", visible = true, defaultImpl = DefaultActivityLogDto.class)
+@JsonTypeInfo(
+	use=JsonTypeInfo.Id.NAME,
+	include=JsonTypeInfo.As.EXTERNAL_PROPERTY,
+	property = "type",
+	visible = true,
+	defaultImpl = DefaultActivityLogDto.class)
 @JsonSubTypes({
 	@JsonSubTypes.Type(value = MessageCreatedActivityLogDto.class, name = ActivityType.Names.MESSAGE_CREATED)
 })
 public abstract class ActivityLogDto implements MessageProvidable {
 
 	private TimelineUserDto from;
-
-	@JsonProperty("type")
 	private ActivityType type;
 	private LocalDateTime activityDate;
 
