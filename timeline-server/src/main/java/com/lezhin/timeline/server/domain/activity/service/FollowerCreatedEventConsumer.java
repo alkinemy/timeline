@@ -1,6 +1,6 @@
 package com.lezhin.timeline.server.domain.activity.service;
 
-import com.lezhin.timeline.server.domain.activity.dto.FollowingCreatedEventForm;
+import com.lezhin.timeline.server.domain.activity.dto.FollowCreatedEventForm;
 import com.lezhin.timeline.server.domain.base.event.EventConsumer;
 import com.lezhin.timeline.server.domain.base.event.EventNameConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct;
 import static reactor.bus.selector.Selectors.$;
 
 @Service
-public class FollowerCreatedEventConsumer implements EventConsumer<FollowingCreatedEventForm> {
+public class FollowerCreatedEventConsumer implements EventConsumer<FollowCreatedEventForm> {
 
 	@Autowired
 	private ActivityLogFacadeService activityLogFacadeService;
@@ -27,8 +27,8 @@ public class FollowerCreatedEventConsumer implements EventConsumer<FollowingCrea
 	}
 
 	@Override
-	public void accept(Event<FollowingCreatedEventForm> event) {
-		activityLogFacadeService.logFollowingCreatedEvent(event.getData());
+	public void accept(Event<FollowCreatedEventForm> event) {
+		activityLogFacadeService.logFollowerCreatedEvent(event.getData());
 	}
 
 }

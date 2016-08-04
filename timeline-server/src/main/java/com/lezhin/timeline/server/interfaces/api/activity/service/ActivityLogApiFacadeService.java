@@ -22,7 +22,7 @@ public class ActivityLogApiFacadeService {
 
 	public PagedResources<ActivityLogDto> getActivityLogs(TimelineUserDto user, Pageable pageable) {
 		Page<ActivityLogEntity> activityLogEntities = activityLogFacadeService.getActivityLogs(user.getLoginId(), pageable);
-		Page<ActivityLogDto> activityLogs = assembler.assemble(pageable, activityLogEntities, ActivityLogDto.class);
+		Page<ActivityLogDto> activityLogs = assembler.assemble(pageable, activityLogEntities, ActivityLogEntity.class, ActivityLogDto.class);
 		return new PagedResources<>(activityLogs);
 	}
 

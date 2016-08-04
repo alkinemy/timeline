@@ -1,7 +1,8 @@
 package com.lezhin.timeline.client.domain.user.service;
 
-import com.lezhin.timeline.client.domain.user.dto.*;
-import com.lezhin.timeline.client.web.base.response.PagedResources;
+import com.lezhin.timeline.client.domain.user.dto.TimelineUserDto;
+import com.lezhin.timeline.client.domain.user.dto.TimelineUserFollowForm;
+import com.lezhin.timeline.client.domain.user.dto.TimelineUserInsertForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,10 +44,6 @@ public class TimelineUserFacadeService {
 		followForm.setFollower(follower);
 		followForm.setFollowing(following);
 		timelineFollowAdapterService.removeFollowing(followForm);
-	}
-
-	public PagedResources<ActivityLogDto> getActivityLogs(ActivityLogSearchConditions conditions) {
-		return timelineUserAdapterService.getActivityLogs(conditions);
 	}
 
 }

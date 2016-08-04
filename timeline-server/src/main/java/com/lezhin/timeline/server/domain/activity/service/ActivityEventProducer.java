@@ -1,6 +1,6 @@
 package com.lezhin.timeline.server.domain.activity.service;
 
-import com.lezhin.timeline.server.domain.activity.dto.FollowingCreatedEventForm;
+import com.lezhin.timeline.server.domain.activity.dto.FollowCreatedEventForm;
 import com.lezhin.timeline.server.domain.base.event.EventNameConstants;
 import com.lezhin.timeline.server.domain.base.event.EventProducer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public class ActivityEventProducer implements EventProducer {
 	@Autowired
 	private EventBus eventBus;
 
-	public void triggerFollowerCreatedEvent(FollowingCreatedEventForm form) {
+	public void triggerFollowerCreatedEvent(FollowCreatedEventForm form) {
 		eventBus.notify(EventNameConstants.FOLLOWER_CREATED, Event.wrap(form));
 	}
 

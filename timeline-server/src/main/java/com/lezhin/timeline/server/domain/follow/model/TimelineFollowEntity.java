@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -14,7 +15,7 @@ import javax.persistence.*;
 public class TimelineFollowEntity extends AuditEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 
@@ -31,5 +32,7 @@ public class TimelineFollowEntity extends AuditEntity {
 		@AttributeOverride(name = "name", column = @Column(name = "following_name")),
 	})
 	private TimelineUser following;
+
+	private LocalDateTime followDate = LocalDateTime.now();
 
 }

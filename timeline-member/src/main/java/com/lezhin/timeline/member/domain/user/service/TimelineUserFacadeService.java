@@ -1,7 +1,7 @@
 package com.lezhin.timeline.member.domain.user.service;
 
-import com.lezhin.timeline.common.domain.base.assembler.SmartAssembler;
 import com.lezhin.timeline.common.domain.base.exception.Exceptions;
+import com.lezhin.timeline.member.domain.base.assembler.SmartAssembler;
 import com.lezhin.timeline.member.domain.base.exception.TimelineErrorCode;
 import com.lezhin.timeline.member.domain.user.model.TimelineUserEntity;
 import com.lezhin.timeline.member.interfaces.api.user.dto.TimelineUserInsertForm;

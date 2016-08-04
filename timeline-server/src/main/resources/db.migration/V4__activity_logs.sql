@@ -6,7 +6,10 @@ CREATE TABLE `timeline`.`activity_logs` (
   `to_login_id` VARCHAR(100) NOT NULL COMMENT 'to user login id',
   `to_name` VARCHAR(100) NULL COMMENT 'to user name',
   `type` VARCHAR(50) NOT NULL COMMENT 'activity type',
-  `link_url` VARCHAR(200) NULL COMMENT 'link',
+  `activity_date` DATETIME NOT NULL COMMENT '액티비티 시간',
+
+  `message_id` VARCHAR(100) NULL COMMENT 'message id',
+
   `created_date` DATETIME NOT NULL COMMENT '등록 일시',
   `last_modified_date` DATETIME NOT NULL COMMENT '변경 일시',
 

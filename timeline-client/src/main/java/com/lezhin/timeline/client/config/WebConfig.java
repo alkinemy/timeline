@@ -1,6 +1,5 @@
 package com.lezhin.timeline.client.config;
 
-import com.lezhin.timeline.common.domain.base.assembler.SmartAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -18,11 +17,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public IDialect java8TimeDialect() {
 		return  new Java8TimeDialect();
-	}
-
-	@Bean
-	public SmartAssembler smartAssembler() {
-		return new SmartAssembler();
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.lezhin.timeline.client.domain.user.dto;
+package com.lezhin.timeline.client.domain.activity.dto;
 
 import lombok.Getter;
 import lombok.Setter;

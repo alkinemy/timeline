@@ -1,13 +1,13 @@
 package com.lezhin.timeline.server.domain.activity.service;
 
-import com.lezhin.timeline.server.domain.activity.dto.FollowingCreatedEventForm;
-import com.lezhin.timeline.server.domain.activity.model.ActivityLogEntity;
-import com.lezhin.timeline.server.domain.activity.model.ActivityType;
+import com.lezhin.timeline.server.domain.activity.dto.FollowCreatedEventForm;
+import com.lezhin.timeline.server.domain.activity.model.*;
 import com.lezhin.timeline.server.domain.base.assembler.SmartAssembler;
 import com.lezhin.timeline.server.domain.common.user.TimelineUser;
 import com.lezhin.timeline.server.domain.follow.service.TimelineFollowFacadeService;
 import com.lezhin.timeline.server.domain.message.model.TimelineMessageEntity;
 import com.lezhin.timeline.server.domain.message.service.TimelineMessageFacadeService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,37 +30,35 @@ public class ActivityLogFacadeService {
 	@Autowired
 	private SmartAssembler assembler;
 
-	public void logFollowingCreatedEvent(FollowingCreatedEventForm form) {
-		ActivityLogEntity activityLog = assembler.assemble(form, ActivityLogEntity.class);
-		activityLog.setType(ActivityType.FOLLOWER_CREATED);
+	@Transactional
+	public void logFollowerCreatedEvent(FollowCreatedEventForm form) {
+		if (StringUtils.equals(form.getFollower().getLoginId(), form.getFollowing().getLoginId())) {
+			return; //가입으로 팔로우 관계가 추가되는 경우 로그를 남기지 않는다
+		}
 
-		//TODO base url을 넣자
-		StringBuilder url = new StringBuilder();
-		url.append("/").append(form.getFollowing().getLoginId());
-		activityLog.setLinkUrl(url.toString());
+		FollowerCreatedActivityLogEntity followerCreated = assembler.assemble(form, FollowerCreatedActivityLogEntity.class);
+		activityLogCommandService.insert(followerCreated);
 
-		activityLogCommandService.insert(activityLog);
+		FollowingCreatedActivityLogEntity followingCreated = assembler.assemble(form, FollowingCreatedActivityLogEntity.class);
+		activityLogCommandService.insert(followingCreated);
 	}
 
 	@Transactional
 	public void logTimelineMessageCreatedEvent(String messageId) {
 		TimelineMessageEntity message = timelineMessageFacadeService.getTimelineMessage(messageId);
-		//TODO base url을 넣자
 		TimelineUser from = message.getAuthor();
-		String url = new StringBuilder().append("/messages/").append(messageId).toString();
-
 		timelineFollowFacadeService.getFollowings(from.getLoginId())
 			.forEach(followingUser -> {
-				ActivityLogEntity activityLog = new ActivityLogEntity();
-				activityLog.setFrom(from);
-				activityLog.setTo(followingUser);
-				activityLog.setType(ActivityType.MESSAGE_CREATED);
-				activityLog.setLinkUrl(url);
-				activityLogCommandService.insert(activityLog);
+				MessageCreatedActivityLogEntity messageCreated = new MessageCreatedActivityLogEntity();
+				messageCreated.setFrom(from);
+				messageCreated.setTo(followingUser);
+				messageCreated.setMessageId(messageId);
+				activityLogCommandService.insert(messageCreated);
 			});
 	}
 
 	public Page<ActivityLogEntity> getActivityLogs(String loginId, Pageable pageable) {
 		return activityLogQueryService.findAllByToLoginId(loginId, pageable);
 	}
+
 }

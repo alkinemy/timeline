@@ -1,6 +1,6 @@
 package com.lezhin.timeline.server.domain.follow.service;
 
-import com.lezhin.timeline.server.domain.activity.dto.FollowingCreatedEventForm;
+import com.lezhin.timeline.server.domain.activity.dto.FollowCreatedEventForm;
 import com.lezhin.timeline.server.domain.activity.service.ActivityEventProducer;
 import com.lezhin.timeline.server.domain.base.assembler.SmartAssembler;
 import com.lezhin.timeline.server.domain.common.user.TimelineUser;
@@ -40,8 +40,8 @@ public class TimelineFollowFacadeService {
 		timelineFollowCommandService.insert(timelineFollowEntity);
 
 		if (!insertForm.getFollower().getLoginId().equals(insertForm.getFollowing().getLoginId())) {
-			FollowingCreatedEventForm followingCreatedEventForm = assembler.assemble(insertForm, FollowingCreatedEventForm.class);
-			activityEventProducer.triggerFollowerCreatedEvent(followingCreatedEventForm);
+			FollowCreatedEventForm followCreatedEventForm = assembler.assemble(insertForm, FollowCreatedEventForm.class);
+			activityEventProducer.triggerFollowerCreatedEvent(followCreatedEventForm);
 		}
 	}
 

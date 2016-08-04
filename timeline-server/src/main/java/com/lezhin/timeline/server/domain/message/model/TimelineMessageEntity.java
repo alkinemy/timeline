@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -14,7 +15,7 @@ import javax.persistence.*;
 public class TimelineMessageEntity extends AuditEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String messageId;
@@ -29,5 +30,7 @@ public class TimelineMessageEntity extends AuditEntity {
 	private String contents;
 
 	private String parentMessageId;
+
+	private LocalDateTime messageDate = LocalDateTime.now();
 
 }
