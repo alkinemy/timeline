@@ -5,8 +5,9 @@ import com.lezhin.timeline.server.domain.activity.service.ActivityEventProducer;
 import com.lezhin.timeline.server.domain.base.assembler.SmartAssembler;
 import com.lezhin.timeline.server.domain.common.user.TimelineUser;
 import com.lezhin.timeline.server.domain.follow.dto.TimelineFollowDeleteForm;
-import com.lezhin.timeline.server.domain.follow.dto.TimelineFollowingInsertForm;
+import com.lezhin.timeline.server.domain.follow.dto.TimelineFollowInsertForm;
 import com.lezhin.timeline.server.domain.follow.model.TimelineFollowEntity;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +33,7 @@ public class TimelineFollowFacadeService {
 	public List<TimelineUser> getFollowings(String loginId) {
 		List<TimelineFollowEntity> follows = timelineFollowQueryService.findAllByFollowerLoginId(loginId);
 		return follows.stream()
-			.filter(follow -> !follow.getFollowing().getLoginId().equals(loginId))
+			.filter(follow -> !StringUtils.equals(follow.getFollowing().getLoginId(), loginId))
 			.map(TimelineFollowEntity::getFollowing).collect(Collectors.toList());
 	}
 
@@ -40,18 +41,18 @@ public class TimelineFollowFacadeService {
 	public List<TimelineUser> getFollowers(String loginId) {
 		List<TimelineFollowEntity> follows = timelineFollowQueryService.findAllByFollowingLoginId(loginId);
 		return follows.stream()
-			.filter(follow -> !follow.getFollower().getLoginId().equals(loginId))
+			.filter(follow -> !StringUtils.equals(follow.getFollower().getLoginId(), loginId))
 			.map(TimelineFollowEntity::getFollower).collect(Collectors.toList());
 	}
 
 	@Transactional
-	public void insert(TimelineFollowingInsertForm insertForm) {
+	public void insert(TimelineFollowInsertForm insertForm) {
 		TimelineFollowEntity timelineFollowEntity = assembler.assemble(insertForm, TimelineFollowEntity.class);
 		timelineFollowCommandService.insert(timelineFollowEntity);
 
-		if (!insertForm.getFollower().getLoginId().equals(insertForm.getFollowing().getLoginId())) {
+		if (!StringUtils.equals(insertForm.getFollower().getLoginId(), insertForm.getFollowing().getLoginId())) {
 			FollowCreatedEventForm followCreatedEventForm = assembler.assemble(insertForm, FollowCreatedEventForm.class);
-			activityEventProducer.triggerFollowerCreatedEvent(followCreatedEventForm);
+			activityEventProducer.triggerFollowCreatedEvent(followCreatedEventForm);
 		}
 	}
 

@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TimelineFollowingInsertForm {
+public class TimelineFollowInsertForm {
 
 	private TimelineUserDto follower;
 	private TimelineUserDto following;

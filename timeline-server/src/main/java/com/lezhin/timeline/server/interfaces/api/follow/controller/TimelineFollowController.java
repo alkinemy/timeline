@@ -1,7 +1,7 @@
 package com.lezhin.timeline.server.interfaces.api.follow.controller;
 
-import com.lezhin.timeline.server.interfaces.api.follow.dto.FollowingApiInsertForm;
-import com.lezhin.timeline.server.interfaces.api.follow.dto.UnfollowApiForm;
+import com.lezhin.timeline.server.domain.follow.dto.TimelineFollowDeleteForm;
+import com.lezhin.timeline.server.domain.follow.dto.TimelineFollowInsertForm;
 import com.lezhin.timeline.server.interfaces.api.follow.service.TimelineFollowApiFacadeService;
 import com.lezhin.timeline.server.interfaces.api.user.dto.TimelineUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +30,13 @@ public class TimelineFollowController {
 	}
 
 	@RequestMapping(path = "/follow", method = RequestMethod.POST)
-	public void following(@RequestBody FollowingApiInsertForm insertApiForm) {
-		timelineFollowApiFacadeService.addFollowing(insertApiForm);
+	public void following(@RequestBody TimelineFollowInsertForm insertForm) {
+		timelineFollowApiFacadeService.follow(insertForm);
 	}
 
 	@RequestMapping(path = "/unfollow", method = RequestMethod.POST)
-	public void unfollow(@RequestBody UnfollowApiForm unfollowApiForm) {
-		timelineFollowApiFacadeService.unfollowing(unfollowApiForm);
+	public void unfollow(@RequestBody TimelineFollowDeleteForm deleteForm) {
+		timelineFollowApiFacadeService.unfollow(deleteForm);
 	}
 
 }

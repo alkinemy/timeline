@@ -17,8 +17,8 @@ public class TimelineFollowCommandService {
 	}
 
 	@Transactional
-	public void delete(String loginId, String followingLoginId) {
-		timelineFollowRepository.findOneByFollowerLoginIdAndFollowingLoginId(loginId, followingLoginId)
+	public void delete(String followerLoginId, String followingLoginId) {
+		timelineFollowRepository.findOneByFollowerLoginIdAndFollowingLoginId(followerLoginId, followingLoginId)
 			.ifPresent(timelineFollowEntity -> timelineFollowRepository.delete(timelineFollowEntity));
 	}
 }

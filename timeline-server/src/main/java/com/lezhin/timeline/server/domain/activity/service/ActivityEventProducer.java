@@ -14,7 +14,7 @@ public class ActivityEventProducer implements EventProducer {
 	@Autowired
 	private EventBus eventBus;
 
-	public void triggerFollowerCreatedEvent(FollowCreatedEventForm form) {
+	public void triggerFollowCreatedEvent(FollowCreatedEventForm form) {
 		eventBus.notify(EventNameConstants.FOLLOWER_CREATED, Event.wrap(form));
 	}
 
