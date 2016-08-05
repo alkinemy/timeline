@@ -5,6 +5,7 @@
     - IntelliJ 2016.1.3
     - Spring boot 1.3.7.RELEASE
     - Java8
+    - MySQL
 
 1. 구현 기능
     - 뉴스피드
