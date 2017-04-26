@@ -1,4 +1,4 @@
-import com.lezhin.timeline.server.TimelineServer;
+import al.timeline.server.TimelineServer;
 import org.fest.assertions.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;

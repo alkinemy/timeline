@@ -10,7 +10,7 @@ subprojects {
     apply plugin: 'eclipse'
     apply plugin: 'idea'
 
-    project.group = 'com.lezhin.timeline'
+    project.group = 'timeline'
     project.version = '0.0.1-SNAPSHOT'
 
     repositories {
